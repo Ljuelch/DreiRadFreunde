@@ -1,0 +1,95 @@
+.banner {
+    height: 100vh;
+    background: url("../assets/img/profile2Leo.JPG") no-repeat;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: flex-end;
+}
+
+.banner .text {
+    text-align: center;
+    padding-bottom: 120px;
+}
+
+.banner .text p {
+    font-size: x-large;
+}
+
+.go-to-helper {
+    padding-top: 20px;
+    text-align: center;
+    padding-bottom: 50px;
+}
+
+.banner .go-to {
+    color: #fff;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: xx-large;
+}
+
+.go-to-mobile {
+    display: none;
+}
+
+@media (min-width: 1201px) {
+    .banner .go-to {
+        display: block;
+        color: #fff;
+        text-transform: uppercase;
+        text-decoration: none;
+        font-size: xx-large;
+    }
+}
+
+@media (max-width: 1200px) {
+    .go-to{
+        display: none;
+    }
+    .go-to-mobile {
+        display: block;
+        color: #fff;
+        text-transform: uppercase;
+        text-decoration: none;
+        font-size: xx-large;
+    }
+    .go-to-helper {
+        padding-top: 20px;
+        text-align: center;
+        padding-bottom: 130px;
+    }
+}
+
+.banner .go-to:before {
+    font-family: FontAwesome, sans-serif;
+    content: "\f078";
+    opacity: 0.33;
+}
+
+.banner h1 {
+    line-height: 80px;
+    font-weight: 300;
+    margin-bottom: 10px;
+}
+
+.mobile-title {
+    line-height: 80px;
+    font-weight: 300;
+    margin-bottom: 10px;
+    font-size: 48px;
+}
+
+.mobile-logo {
+    padding-top: 15px;
+}
+
+.mobile-media {
+    display: none;
+}
+
+@media (max-width: 1200px) {
+    .mobile-media {
+        display: block;
+    }
+}

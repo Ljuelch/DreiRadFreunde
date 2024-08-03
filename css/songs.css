@@ -1,0 +1,370 @@
+.sec2 .container .sec2-inner .sec2-slider .item {
+    transition: all ease 0.5s 0s;
+}
+
+.sec2 .container .sec2-inner .sec2-slider .item:hover {
+    transform: scale(.95);
+}
+
+.sec2 .container .sec2-inner .sec2-slider .item .text {
+    display: none;
+}
+
+.sec2 .container .sec2-inner .sec2-slider .item:hover .image {
+    opacity: 20%;
+}
+
+.sec2 .container .sec2-inner .sec2-slider .item .text {
+    text-align: center;
+    justify-content: center;
+    margin: -65% 0 0 0;
+    color: #fff;
+}
+
+.sec2 .container .sec2-inner .sec2-slider .item:hover .text {
+    display: block;
+}
+
+.sec2 .container .sec2-inner .sec2-slider .item:hover .text p {
+    margin-top: 5px;
+}
+
+.sec2 .container .sec2-inner .sec2-slider .item .text .streaming-services {
+    justify-content: space-evenly;
+    display: flex;
+    margin-top: 4rem;
+}
+
+.sec2 .container .sec2-inner .sec2-slider .item .text .streaming-services .spotify-logo1:before {
+    font-size: x-large;
+    font-family: FontAwesome, sans-serif;
+    content: "\f1bc";
+}
+
+.sec2 .container .sec2-inner .sec2-slider .item .text .streaming-services .apple-logo1:before {
+    font-size: x-large;
+    font-family: FontAwesome, sans-serif;
+    content: "\f001";
+}
+
+.sec2 .container .sec2-inner .sec2-slider .item .text .streaming-services .spotify-logo .spotify-text {
+    text-decoration: none;
+    color: #fff;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+.sec2 .container .sec2-inner .sec2-slider .item .text .streaming-services .apple-logo .apple-text {
+    text-decoration: none;
+    color: #fff;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+
+.sec2 .container .sec2-inner .sec2-slider .item .text .streaming-services .spotify-logo {
+    z-index: 1;
+    font-size: x-large;
+    font-family: FontAwesome, sans-serif;
+    content: "\f1bc";
+}
+
+.sec2 .container .sec2-inner .sec2-slider .item .text .streaming-services .apple-logo {
+    z-index: 1;
+    font-size: x-large;
+    font-family: FontAwesome, sans-serif;
+    content: "\f001";
+}
+
+.sec2 .container .sec2-inner .sec2-slider .item .text .streaming-services .spotify-logo .spotify-text:hover {
+    color: #1fdf64;
+}
+
+.sec2 .container .sec2-inner .sec2-slider .item .text .streaming-services .apple-logo .apple-text:hover {
+    color: #fa586a;
+}
+
+.sec2 .item img {
+    max-height: 400px;
+    width: 390px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.sec2 {
+    padding: 60px 0 0;
+}
+.sec2 h2 {
+    text-transform: uppercase;
+    font-weight: 100;
+}
+
+
+@media (max-width: 1200px) {
+    .sec2 .item img {
+        max-height: 480px;
+        width: 330px;
+    }
+    .sec2 h2 {
+        text-align: center;
+    }
+}
+
+@media (max-width: 1110px) {
+    .sec2 .item img {
+        max-height: 480px;
+        width: 280px;
+    }
+    .sec2 .text {
+        max-width: 280px;
+    }
+    .sec2 .text p {
+        font-size: smaller;
+    }
+    .sec2 .item .streaming-services {
+        margin-top: 2rem!important;
+    }
+    .sec2 .item .streaming-services .spotify-logo, .apple-logo {
+        font-size: medium!important;
+    }
+}
+
+@media (max-width: 945px) {
+    .sec2 .item img {
+        max-height: 480px;
+        width: 236px;
+    }
+    .sec2 .text {
+        max-width: 236px;
+    }
+    .sec2 .text p {
+        font-size: x-small;
+    }
+}
+
+@media (max-width: 815px) {
+    .sec2 .text {
+        margin: -75% 0 0 0!important;
+    }
+}
+
+@media (max-width: 796px) {
+    .sec2 .item img {
+        max-height: 480px;
+        width: 200px;
+    }
+
+    .sec2 .text {
+        margin: -65% 0 0 0!important;
+    }
+    .sec2 .text {
+        max-width: 280px;
+    }
+    .sec2 .text p {
+        font-size: smaller;
+    }
+    .sec2 .item .streaming-services {
+        margin-top: 2rem!important;
+    }
+    .sec2 .item .streaming-services .spotify-logo, .apple-logo {
+        font-size: medium!important;
+    }
+}
+@media (max-width: 795px) {
+    .sec2 .item img {
+        max-height: 480px;
+        width: 300px;
+    }
+}
+
+@media (max-width: 688px) {
+    .sec2 .item img {
+        max-height: 480px;
+        width: 250px;
+    }
+
+    .sec2 .text {
+        margin: -65% 0 0 0!important;
+    }
+    .sec2 .text {
+        max-width: 242px;
+    }
+    .sec2 .text p {
+        font-size: x-small!important;
+    }
+
+}
+
+@media (max-width: 576px) {
+    .sec2 .item img {
+        max-height: 480px;
+        width: 200px;
+    }
+
+    .sec2 .text {
+        margin: -65% 0 0 0!important;
+    }
+    .sec2 .text {
+        max-width: 200px;
+    }
+    .sec2 .text p {
+        font-size: smaller;
+    }
+    .sec2 .item .streaming-services {
+        margin-top: 2rem!important;
+    }
+    .sec2 .item .streaming-services .spotify-logo, .apple-logo {
+        font-size: small!important;
+    }
+}
+
+@media (max-width: 520px) {
+    .sec2 .text {
+        margin: -75% 0 0 0!important;
+    }
+}
+
+@media (max-width: 449px) {
+    .sec2 .item img {
+        max-height: 480px;
+        width: 326px;
+    }
+
+    .sec2 .text {
+        margin: -65% 0 0 0!important;
+    }
+    .sec2 .text {
+        max-width: 325px;
+    }
+    .sec2 .text p {
+        font-size: small!important;
+    }
+    .sec2 .item .streaming-services {
+        margin-top: 3rem!important;
+    }
+    .sec2 .item .streaming-services .spotify-logo, .apple-logo {
+        font-size: medium!important;
+    }
+}
+
+
+
+@media (max-width: 449px) {
+    .sec2 .item img {
+        max-height: 480px;
+        width: 359px!important;
+    }
+}
+
+@media (max-width: 416px) {
+    .sec2 .item img {
+        max-height: 480px;
+        width: 340px!important;
+    }
+}
+
+
+@media (max-width: 400px) {
+    .sec2 .item img {
+        max-height: 480px;
+        width: 330px!important;
+    }
+}
+
+@media (max-width: 384px) {
+    .sec2 .item img {
+        max-height: 480px;
+        width: 300px!important;
+    }
+}
+
+@media (max-width: 352px) {
+    .sec2 .item img {
+        max-height: 480px;
+        width: 293px!important;
+    }
+}
+
+@media (max-width: 352px) {
+    .sec2 .item img {
+        max-height: 480px;
+        width: 273px!important;
+    }
+}
+
+@media (max-width: 381px) {
+    .sec2 .item img {
+        max-height: 480px;
+        width: 266px;
+    }
+}
+
+
+@media (max-width: 376px) {
+    .sec2 .item img {
+        max-height: 480px;
+        width: 323px;
+    }
+
+    .sec2 .text {
+        margin: -75% 0 0 0!important;
+    }
+}
+
+@media (max-width: 360px) {
+    .sec2 .item img {
+        max-height: 480px;
+        width: 300px;
+    }
+}
+
+@media (max-width: 321px) {
+    .sec2 .item img {
+        max-height: 480px;
+        width: 258px!important;
+    }
+}
+
+@media (max-width: 304px) {
+    .sec2 .item img {
+        max-height: 480px;
+        width: 240px!important;
+    }
+}
+
+@media (max-width: 280px) {
+    .sec2 .item img {
+        max-height: 480px;
+        width: 233px;
+    }
+    .sec2 .text p {
+        font-size: xx-small!important;
+    }
+}
+
+.sec2-slider {
+    margin-top: 40px;
+    margin-bottom: 60px;
+}
+
+.slick-slide {
+    height: 100%;
+}
+
+.sec2-slider {
+    max-height: 400px;
+}
+
+.slick-slide, .slick-current, .slick-active {
+    max-height: 400px;
+}
+
+.slick-prev:before {
+    font-family: FontAwesome, sans-serif;
+    content: "\f053";
+}
+.slick-next:before {
+    font-family: FontAwesome, sans-serif;
+    content: "\f054";
+}

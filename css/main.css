@@ -1,0 +1,47 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+    outline: none;
+}
+
+body {
+    color: #fff;
+    background-color: #000;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+h1,h2,h3,h4,h5,h6 {
+    font-family: Butler, sans-serif;
+}
+
+
+h1 {
+    font-size: 70px;
+}
+
+h2 {
+    font-size: 36px;
+}
+
+h3 {
+    font-size: 26px;
+}
+
+.container {
+    max-width: 1166px;
+    margin: 0 auto;
+}
+
+@media (max-width: 1200px) {
+    .container {
+        max-width: 90%;
+    }
+    footer .container {
+        max-width: 1100px!important;
+    }
+}
+
+.container-footer {
+    max-width: 1100px;
+    margin: 0 auto;
+}

@@ -1,0 +1,88 @@
+.secVid .container .secVid-inner .secVid-slider .item{
+    transition: all ease 0.5s 0s;
+    height: 100%;
+}
+
+.secVid .container .secVid-inner .secVid-slider .item:hover {
+    transform: scale(.95);
+}
+
+.secVid .container .secVid-inner .secVid-slider .item:hover .image {
+    opacity: 20%;
+}
+
+.secVid .container .secVid-inner .secViv-slider .item .image {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.secVid .item img {
+    max-height: 200px;
+    width: 390px;
+    max-width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-right: 5px;
+    padding-left: 5px;
+    cursor: pointer;
+}
+
+.secVid {
+    padding: 60px 0 0;
+}
+.secVid h2 {
+    text-transform: uppercase;
+    font-weight: 100;
+}
+
+@media (max-width: 1200px) {
+    .secVid .container .secVid-inner h2 {
+        text-align: center;
+    margin-bottom: 0!important;
+    }
+    .video-box {
+        height: 300px!important;
+    }
+    .video-container-helper {
+        margin: 0 auto;
+        max-width: 80%;
+    }
+    .video-box {
+        margin-top: 30px!important;
+        height: 250px!important;
+    }
+    .secVid-slider {
+        margin-top: 0px!important;
+    }
+}
+
+.secVid-slider {
+    margin-top: 40px;
+}
+
+.slick-slide {
+    height: 100%;
+}
+
+.secVid-slider {
+    max-height: 200px;
+}
+
+.video-box .slick-slide, .slick-current, .slick-active {
+    max-height: 200px;
+}
+
+.slick-prev:before {
+    font-family: FontAwesome, sans-serif;
+    content: "\f053";
+}
+.slick-next:before {
+    font-family: FontAwesome, sans-serif;
+    content: "\f054";
+}
+
+.video-box {
+    margin-top: 40px;
+    height: 450px;
+}

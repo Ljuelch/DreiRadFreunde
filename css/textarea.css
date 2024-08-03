@@ -1,0 +1,107 @@
+.sec1 {
+    position: relative;
+    padding-top: 40px;
+}
+.sec1 h3 {
+    text-transform: uppercase;
+    line-height: 32px;
+}
+.sec1 p {
+    line-height: 32px;
+}
+.sec1-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.sec1 .text {
+    width: 47%;
+}
+
+.sec1 .text-right {
+    text-align: center;
+}
+
+.grb-logo {
+    max-width: 150px;
+    height: auto;
+}
+
+.next-up-pic {
+    max-width: 400px;
+    height: auto;
+}
+
+.next-up-container {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.col-3 {
+    width: 50%;
+    float: left;
+}
+
+.col-3-text {
+    width: 50%;
+    float: right;
+}
+
+.pic-container {
+    text-align: center;
+}
+
+.presave a{
+    color: inherit;
+}
+
+.presave a:hover{
+    opacity: 0.8;
+}
+
+.out-now-hover-spotify:hover {
+    color: #1fdf64;
+}
+
+.out-now-hover-apple:hover {
+    color: #fa586a;
+}
+
+.out-now-hover-deezer:hover {
+    color: rgb(225 90 52);
+}
+
+.out-now-hover-youtube:hover {
+    color: rgb(225 0 0);
+}
+
+@media (max-width: 1200px) {
+    .banner .landing-text{
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .col-3,
+    .col-3-text {
+        width: 80%;
+        float: none;
+    }
+    .next-up-pic {
+        max-width: 300px;
+        height: auto;
+    }
+    .grb-logo {
+        display: none;
+    }
+    .sec1 {
+        padding-top: 0;
+    }
+}
+
+@media (max-width: 1200px) {
+    .secVid h2 {
+        text-align: center;
+    }
+}
