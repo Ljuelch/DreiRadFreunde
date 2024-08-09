@@ -17,3 +17,17 @@ $(document).ready(()=>{
 	})
 
 })
+
+document.addEventListener("DOMContentLoaded", function() {
+	const dividerSection = document.querySelector('.divider');
+
+	const observer = new IntersectionObserver(entries => {
+		entries.forEach(entry => {
+			if (entry.isIntersecting) {
+				dividerSection.classList.add('divider-animated');
+			}
+		});
+	});
+
+	observer.observe(dividerSection);
+});

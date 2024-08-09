@@ -1,0 +1,43 @@
+
+.hr-right {
+    border: 0;
+    border-top: 1px solid #ccc;
+    width: 70%;
+    margin: 0;
+}
+
+.hr-left {
+    border: 0;
+    border-top: 1px solid #ccc;
+    width: 70%;
+    margin: 0;
+}
+
+.divider .row {
+    margin-left: 26rem;
+    margin-right: 26rem;
+}
+
+.hr-left,
+.hr-right {
+    border: 0;
+    border-top: 1px solid #ccc;
+    width: 70%;
+    margin: 0;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.6s ease-in-out;
+}
+
+.hr-left {
+    transform-origin: right;
+}
+
+.hr-right {
+    transform-origin: left;
+}
+
+.divider-animated .hr-left,
+.divider-animated .hr-right {
+    transform: scaleX(1);
+}
