@@ -1,11 +1,10 @@
-
-.container{
+.recent-artists .container {
     padding: 20px 0;
     margin: 0 auto;
     width: 1140px;
 }
 
-h1{
+.recent-artists h1 {
     position: relative;
     margin-bottom: 45px;
     font-family: 'Oswald', sans-serif;
@@ -13,53 +12,69 @@ h1{
     text-transform: uppercase;
 }
 
-.gallery-wrap {
+.recent-artists .gallery-wrap {
     display: flex;
     flex-direction: row;
     width: 100%;
     height: 70vh;
 }
 
-.item {
+.recent-artists .item {
+    position: relative;
     flex: 1;
     height: 100%;
     background-position: center;
     background-size: cover;
     background-repeat: none;
     transition: flex 0.8s ease;
-
-    &:hover{
-        flex: 7;
-    }
 }
 
-.item-1 {
+.recent-artists .item:hover {
+    flex: 7;
+}
+
+.recent-artists .item .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.recent-artists .item:hover .overlay {
+    opacity: 1;
+}
+
+.recent-artists .artist-name {
+    color: white;
+    font-family: 'Oswald', sans-serif;
+    font-size: 24px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.recent-artists .item-1 {
     background-image: url('https://i.scdn.co/image/ab6761610000e5ebbaddea6de33c542f12d5d045');
 }
 
-.item-2 {
+.recent-artists .item-2 {
     background-image: url('https://i.scdn.co/image/ab6761610000e5ebd442174871d42120c87b8217');
 }
 
-.item-3 {
+.recent-artists .item-3 {
     background-image: url('https://i.scdn.co/image/ab6761610000e5eb0cf436fac6c68428c5c8517c');
 }
 
-.item-4 {
+.recent-artists .item-4 {
     background-image: url('https://i.scdn.co/image/ab6761610000f178d374f0cd99cebef583864c13');
 }
 
-.item-5 {
+.recent-artists .item-5 {
     background-image: url('https://i.scdn.co/image/ab6761610000e5eb46de7a5f725214889c4fff3a');
-}
-
-.social{
-    position: absolute;
-    right: 35px;
-    bottom: 0;
-
-    img{
-        display: block;
-        width: 32px;
-    }
 }
