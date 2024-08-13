@@ -1,0 +1,85 @@
+.services-feature {
+    padding: 60px 0 0;
+}
+
+.box {
+    width: 100%;
+    padding-top: 100%;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.box::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    transition: background-color 1s ease;
+    border-radius: 5px;
+}
+
+.box:hover::before {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.box-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    z-index: 1;
+    max-width: 80%;
+}
+
+.box-1 {
+    background-image: url('/assets/pierreImg/record-background.jpg');
+}
+
+.box-2 {
+    background-image: url('/assets/pierreImg/mixing-background.jpeg');
+}
+
+.box-3 {
+    background-image: url('/assets/pierreImg/mastering-background.jpg');
+}
+
+@media (max-width: 576px) {
+    .box {
+        padding-top: 40%;
+        margin-bottom: 10px;
+    }
+}
+
+.box-content-font {
+    font-size: xx-large;
+}
+
+.box-content-font-info {
+    margin-bottom: 0;
+}
+
+.underline-service {
+    border-top: 4px solid #ccc;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transition: opacity 1.7s ease, background-color 1.7s ease;
+    background-color: rgba(0, 0, 0, 0);
+    opacity: 0;
+}
+
+.box:hover .box-content .underline-service {
+    background-color: rgba(0, 0, 0, 1);
+    opacity: 1;
+}
