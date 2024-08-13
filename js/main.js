@@ -36,17 +36,59 @@ document.addEventListener('DOMContentLoaded', () => {
 	const boxes = document.querySelectorAll('.box');
 	const overlay = document.querySelector('.modal-overlay');
 
-	// Function to open the modal and disable page scrolling
-	function openModal(modalId) {
-		const modal = document.getElementById(modalId);
-		if (modal) {
-			console.log(`Opening modal: ${modalId}`); // Debugging line
-			modal.style.display = 'flex'; // Use flex for centering
-			overlay.style.display = 'block'; // Show overlay
-		} else {
-			console.error(`Modal with ID ${modalId} not found.`);
-		}
+	// Desktop Links
+	const recordLinkDesktop = document.getElementById('recordLink');
+	const mixLinkDesktop = document.getElementById('mixLink');
+	const masterLinkDesktop = document.getElementById('masterLink');
+	const contactLinkDesktop = document.getElementById('contact-nav-link');
+
+	// Mobile Links
+	const recordLinkMobile = document.getElementById('recordLinkMobile');
+	const mixLinkMobile = document.getElementById('mixLinkMobile');
+	const masterLinkMobile = document.getElementById('masterLinkMobile');
+	const contactLinkMobile = document.getElementById('contactLinkMobile');
+
+	const targetSection = document.querySelector('.go-to');
+	const recordModal = document.getElementById('recordModal');
+	const mixModal = document.getElementById('mixModal');
+	const masterModal = document.getElementById('masterModal');
+	const contactSection = document.getElementById('contactSection');
+
+	// Function to scroll to the section
+	function scrollToSection(section) {
+		section.scrollIntoView({ behavior: 'smooth' });
 	}
+
+	// Function to open the modal
+	function openModal(modal) {
+		modal.style.display = 'flex';
+		overlay.style.display = 'block';
+	}
+
+	// Function to handle clicks on Record, Mix, Master
+	function handleServiceLinkClick(event, section, modal) {
+		event.preventDefault(); // Prevent the default link behavior
+		scrollToSection(section);
+		openModal(modal);
+	}
+
+	// Function to handle the Contact link click
+	function handleContactLinkClick(event, section) {
+		event.preventDefault(); // Prevent the default link behavior
+		scrollToSection(section);
+	}
+
+	// Event listeners for desktop links
+	recordLinkDesktop.addEventListener('click', (event) => handleServiceLinkClick(event, targetSection, recordModal));
+	mixLinkDesktop.addEventListener('click', (event) => handleServiceLinkClick(event, targetSection, mixModal));
+	masterLinkDesktop.addEventListener('click', (event) => handleServiceLinkClick(event, targetSection, masterModal));
+	contactLinkDesktop.addEventListener('click', (event) => handleContactLinkClick(event, contactSection));
+
+	// Event listeners for mobile links
+	recordLinkMobile.addEventListener('click', (event) => handleServiceLinkClick(event, targetSection, recordModal));
+	mixLinkMobile.addEventListener('click', (event) => handleServiceLinkClick(event, targetSection, mixModal));
+	masterLinkMobile.addEventListener('click', (event) => handleServiceLinkClick(event, targetSection, masterModal));
+	contactLinkMobile.addEventListener('click', (event) => handleContactLinkClick(event, contactSection));
 
 	// Function to close the modal and re-enable page scrolling
 	function closeModal() {
@@ -54,14 +96,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		modals.forEach(modal => modal.style.display = 'none');
 		overlay.style.display = 'none'; // Hide overlay
 	}
-
-	// Open modal on box click
-	boxes.forEach(box => {
-		box.addEventListener('click', () => {
-			const modalId = box.getAttribute('data-modal-id');
-			openModal(modalId);
-		});
-	});
 
 	// Close modal on close button click
 	const closeBtns = document.querySelectorAll('.modal .close');
@@ -75,6 +109,8 @@ document.addEventListener('DOMContentLoaded', () => {
 			closeModal();
 		}
 	});
+
+	// Close modal if pressing ESC key
 	window.addEventListener('keydown', (event) => {
 		if (event.key === 'Escape') { // 'Escape' is the key name for Esc
 			closeModal();
