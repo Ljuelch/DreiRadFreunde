@@ -78,6 +78,16 @@ document.addEventListener('DOMContentLoaded', () => {
 		scrollToSection(section);
 	}
 
+	// Function to handle clicks on the service boxes
+	function handleBoxClick(event) {
+		const modalId = event.currentTarget.getAttribute('data-modal-id');
+		const modal = document.getElementById(modalId);
+		if (modal) {
+			scrollToSection(modal);
+			openModal(modal);
+		}
+	}
+
 	// Event listeners for desktop links
 	recordLinkDesktop.addEventListener('click', (event) => handleServiceLinkClick(event, targetSection, recordModal));
 	mixLinkDesktop.addEventListener('click', (event) => handleServiceLinkClick(event, targetSection, mixModal));
@@ -89,6 +99,11 @@ document.addEventListener('DOMContentLoaded', () => {
 	mixLinkMobile.addEventListener('click', (event) => handleServiceLinkClick(event, targetSection, mixModal));
 	masterLinkMobile.addEventListener('click', (event) => handleServiceLinkClick(event, targetSection, masterModal));
 	contactLinkMobile.addEventListener('click', (event) => handleContactLinkClick(event, contactSection));
+
+	// Event listeners for service boxes
+	boxes.forEach(box => {
+		box.addEventListener('click', handleBoxClick);
+	});
 
 	// Function to close the modal and re-enable page scrolling
 	function closeModal() {
@@ -117,4 +132,5 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	});
 });
+
 

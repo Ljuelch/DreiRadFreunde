@@ -24,6 +24,7 @@
 
 .modal-content {
     background-color: rgba(53, 51, 51, 1) !important;
+    box-shadow: 0 3px 6px rgba(255, 255, 255, 0.1) !important;
     padding: 6rem 20px;
     padding-top: 4rem;
     border: 1px solid #888;
