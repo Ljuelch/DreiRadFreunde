@@ -1,0 +1,38 @@
+.imprint {
+    background-color: #f9f9f9;
+    padding: 20px;
+    color: #333;
+    line-height: 1.6;
+}
+
+.imprint .container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.imprint h1, .imprint h2, .imprint h3 {
+    color: #222;
+}
+
+.imprint p {
+    margin-bottom: 1.5rem;
+}
+
+.imprint a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+.imprint a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .imprint .container {
+        padding: 0 15px;
+    }
+
+    .imprint p {
+        font-size: 0.9rem;
+    }
+}
