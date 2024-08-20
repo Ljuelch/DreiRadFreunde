@@ -124,7 +124,6 @@
     }
 
     .icon-item {
-        width: 100%;
         text-align: center;
     }
 
@@ -132,6 +131,18 @@
         padding-top: 1rem!important;
         font-size: 1rem;
         color: #fff;
+    }
+
+    .icon-item i {
+        font-size: .5rem;
+        margin-bottom: 5px;
+    }
+
+    .modal-content {
+        width: 90%;
+        max-height: none;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
     }
 
     h2, h3 {
