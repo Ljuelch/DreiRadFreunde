@@ -2,13 +2,13 @@ $(document).ready(()=>{
 
 	$(".go-to").click(()=>
 		$('html, body').animate({
-			scrollTop: $("#page-content").offset().top
+			scrollTop: $("#services-helper").offset().top - 50
 		}, 100)
 	)
 
 	$(".go-to-mobile").click(()=>
 		$('html, body').animate({
-			scrollTop: $("#sec-vid-helper").offset().top
+			scrollTop: $("#services-helper").offset().top - 90
 		}, 100)
 	)
 	

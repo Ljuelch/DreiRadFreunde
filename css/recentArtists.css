@@ -78,3 +78,10 @@
 .recent-artists .item-5 {
     background-image: url('https://i.scdn.co/image/ab6761610000e5eb46de7a5f725214889c4fff3a');
 }
+
+
+@media (max-width: 768px) {
+    .gallery-wrap .item:nth-child(n+4) {
+        display: none;
+    }
+}

@@ -113,6 +113,30 @@
     justify-content: center;
     align-items: center;
     gap: 20px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+    .icon-row {
+        flex-direction: column;
+        gap: 0;
+        padding-top: 0;
+    }
+
+    .icon-item {
+        width: 100%;
+        text-align: center;
+    }
+
+    .icon-item p {
+        padding-top: 1rem!important;
+        font-size: 1rem;
+        color: #fff;
+    }
+
+    h2, h3 {
+        display: none;
+    }
 }
 
 .icon-item {
