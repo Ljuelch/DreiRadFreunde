@@ -7,6 +7,14 @@
     align-items: flex-end;
 }
 
+@media (max-width: 768px) {
+    .banner {
+        background: url("../assets/pierreImg/3.jpeg") no-repeat;
+        background-size: cover;
+        background-position: center;
+    }
+}
+
 .banner::before {
     background-color: rgba(0, 0, 0, 0.3);
     transition: background-color 1s ease;
@@ -91,6 +99,7 @@
     font-weight: 300;
     margin-bottom: 10px;
     font-size: 48px;
+    font-family: 'Oswald', sans-serif;
 }
 
 .mobile-logo {

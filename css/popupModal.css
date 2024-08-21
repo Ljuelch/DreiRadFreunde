@@ -22,6 +22,22 @@
     overflow: hidden;
 }
 
+@media (max-width: 768px) {
+    .modal {
+    z-index: 9999;
+    top: 1rem;
+        width: 100%;
+        position: fixed;
+        justify-content: center;
+        align-items: center;
+        overflow: auto;
+    }
+    .modal-content {
+    top: -17px;
+    padding: 0!important;
+    }
+}
+
 .modal-content {
     background: url('https://i.imgur.com/tx2Ew5H.jpeg') no-repeat center center;
     background-size: cover;
@@ -92,6 +108,7 @@
 }
 
 .close {
+z-index: 9999;
     color: #aaa;
     position: absolute;
     top: 10px;
