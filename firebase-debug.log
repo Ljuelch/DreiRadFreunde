@@ -1,0 +1,193 @@
+[debug] [2025-05-20T15:09:18.758Z] ----------------------------------------------------------------------
+[debug] [2025-05-20T15:09:18.759Z] Command:       /usr/local/bin/firebase /Users/juelch/.cache/firebase/tools/lib/node_modules/firebase-tools/lib/bin/firebase init
+[debug] [2025-05-20T15:09:18.760Z] CLI Version:   13.30.0
+[debug] [2025-05-20T15:09:18.760Z] Platform:      darwin
+[debug] [2025-05-20T15:09:18.760Z] Node Version:  v18.5.0
+[debug] [2025-05-20T15:09:18.762Z] Time:          Tue May 20 2025 17:09:18 GMT+0200 (Central European Summer Time)
+[debug] [2025-05-20T15:09:18.762Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-05-20T15:09:18.772Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-05-20T15:09:18.774Z] > authorizing via signed-in user (dreiradfreunde3@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  /Users/juelch/gitprojects/private/DreiRadFreunde
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2025-05-20T15:10:48.884Z] Checked if tokens are valid: true, expires at: 1747757271640
+[debug] [2025-05-20T15:10:48.885Z] Checked if tokens are valid: true, expires at: 1747757271640
+[debug] [2025-05-20T15:10:48.888Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects pageSize=100
+[debug] [2025-05-20T15:10:49.497Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects 200
+[debug] [2025-05-20T15:10:49.499Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects [omitted]
+[info] i  Using project dreiradfreunde-56aca (dreiradfreunde) 
+[info] 
+=== Dataconnect Setup
+[debug] [2025-05-20T15:10:52.468Z] Checked if tokens are valid: true, expires at: 1747757271640
+[debug] [2025-05-20T15:10:52.468Z] Checked if tokens are valid: true, expires at: 1747757271640
+[debug] [2025-05-20T15:10:52.470Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/dreiradfreunde-56aca/billingInfo [none]
+[debug] [2025-05-20T15:10:52.924Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/dreiradfreunde-56aca/billingInfo 200
+[debug] [2025-05-20T15:10:52.927Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/dreiradfreunde-56aca/billingInfo {"name":"projects/dreiradfreunde-56aca/billingInfo","projectId":"dreiradfreunde-56aca","billingAccountName":"","billingEnabled":false}
+[info] i  dataconnect: ensuring required API sqladmin.googleapis.com is enabled... 
+[debug] [2025-05-20T15:10:52.929Z] Checked if tokens are valid: true, expires at: 1747757271640
+[debug] [2025-05-20T15:10:52.929Z] Checked if tokens are valid: true, expires at: 1747757271640
+[debug] [2025-05-20T15:10:52.929Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/dreiradfreunde-56aca/services/sqladmin.googleapis.com [none]
+[debug] [2025-05-20T15:10:52.929Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/dreiradfreunde-56aca/services/sqladmin.googleapis.com x-goog-quota-user=projects/dreiradfreunde-56aca
+[debug] [2025-05-20T15:10:54.211Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/dreiradfreunde-56aca/services/sqladmin.googleapis.com 200
+[debug] [2025-05-20T15:10:54.213Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/dreiradfreunde-56aca/services/sqladmin.googleapis.com [omitted]
+[warn] ⚠  dataconnect: missing required API sqladmin.googleapis.com. Enabling now... 
+[debug] [2025-05-20T15:10:54.215Z] Checked if tokens are valid: true, expires at: 1747757271640
+[debug] [2025-05-20T15:10:54.215Z] Checked if tokens are valid: true, expires at: 1747757271640
+[debug] [2025-05-20T15:10:54.215Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1/projects/dreiradfreunde-56aca/services/sqladmin.googleapis.com:enable [none]
+[debug] [2025-05-20T15:10:54.215Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1/projects/dreiradfreunde-56aca/services/sqladmin.googleapis.com:enable x-goog-quota-user=projects/dreiradfreunde-56aca
+[debug] [2025-05-20T15:10:55.438Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1/projects/dreiradfreunde-56aca/services/sqladmin.googleapis.com:enable 200
+[debug] [2025-05-20T15:10:55.439Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1/projects/dreiradfreunde-56aca/services/sqladmin.googleapis.com:enable [omitted]
+[debug] [2025-05-20T15:11:05.445Z] Checked if tokens are valid: true, expires at: 1747757271640
+[debug] [2025-05-20T15:11:05.446Z] Checked if tokens are valid: true, expires at: 1747757271640
+[debug] [2025-05-20T15:11:05.446Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/dreiradfreunde-56aca/services/sqladmin.googleapis.com [none]
+[debug] [2025-05-20T15:11:05.446Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/dreiradfreunde-56aca/services/sqladmin.googleapis.com x-goog-quota-user=projects/dreiradfreunde-56aca
+[debug] [2025-05-20T15:11:06.417Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/dreiradfreunde-56aca/services/sqladmin.googleapis.com 200
+[debug] [2025-05-20T15:11:06.417Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/dreiradfreunde-56aca/services/sqladmin.googleapis.com [omitted]
+[info] ✔  dataconnect: required API sqladmin.googleapis.com is enabled 
+[info] ✔  Wrote dataconnect/dataconnect.yaml 
+[info] ✔  Wrote dataconnect/schema/schema.gql 
+[info] ✔  Wrote dataconnect/connector/connector.yaml 
+[info] ✔  Wrote dataconnect/connector/queries.gql 
+[info] ✔  Wrote dataconnect/connector/mutations.gql 
+[info] i  If you'd like to add the generated SDK to your app your, run firebase init dataconnect:sdk 
+[info] i  If you'd like to provision a CloudSQL Postgres instance on the Firebase Data Connect no-cost trial:
+1. Please upgrade to the pay-as-you-go (Blaze) billing plan. Visit the following page:
+     https://console.firebase.google.com/project/dreiradfreunde-56aca/usage/details
+2. Run firebase init dataconnect again to configure the Cloud SQL instance.
+3. Run firebase deploy --only dataconnect to deploy your Data Connect service. 
+[info] 
+=== Firestore Setup
+[debug] [2025-05-20T15:11:06.441Z] Checked if tokens are valid: true, expires at: 1747757271640
+[debug] [2025-05-20T15:11:06.441Z] Checked if tokens are valid: true, expires at: 1747757271640
+[debug] [2025-05-20T15:11:06.441Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/dreiradfreunde-56aca/services/firestore.googleapis.com [none]
+[debug] [2025-05-20T15:11:06.441Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/dreiradfreunde-56aca/services/firestore.googleapis.com x-goog-quota-user=projects/dreiradfreunde-56aca
+[debug] [2025-05-20T15:11:07.472Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/dreiradfreunde-56aca/services/firestore.googleapis.com 200
+[debug] [2025-05-20T15:11:07.472Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/dreiradfreunde-56aca/services/firestore.googleapis.com [omitted]
+[debug] [2025-05-20T15:11:07.474Z] Checked if tokens are valid: true, expires at: 1747757271640
+[debug] [2025-05-20T15:11:07.474Z] Checked if tokens are valid: true, expires at: 1747757271640
+[debug] [2025-05-20T15:11:07.475Z] >>> [apiv2][query] GET https://firestore.googleapis.com/v1/projects/dreiradfreunde-56aca/databases/(default) [none]
+[debug] [2025-05-20T15:11:07.789Z] <<< [apiv2][status] GET https://firestore.googleapis.com/v1/projects/dreiradfreunde-56aca/databases/(default) 200
+[debug] [2025-05-20T15:11:07.789Z] <<< [apiv2][body] GET https://firestore.googleapis.com/v1/projects/dreiradfreunde-56aca/databases/(default) {"name":"projects/dreiradfreunde-56aca/databases/(default)","uid":"b9b371d2-cfa4-4718-8ea8-f99a636f9b69","createTime":"2025-05-20T14:14:48.748013Z","updateTime":"2025-05-20T14:14:48.748013Z","locationId":"europe-west3","type":"FIRESTORE_NATIVE","concurrencyMode":"PESSIMISTIC","versionRetentionPeriod":"3600s","earliestVersionTime":"2025-05-20T14:14:48.748013Z","appEngineIntegrationMode":"DISABLED","keyPrefix":"h","pointInTimeRecoveryEnablement":"POINT_IN_TIME_RECOVERY_DISABLED","deleteProtectionState":"DELETE_PROTECTION_DISABLED","databaseEdition":"STANDARD","freeTier":true,"etag":"INLgxcOqso0DMO3fpvidso0D"}
+[debug] [2025-05-20T15:11:07.789Z] database_type: FIRESTORE_NATIVE
+[debug] [2025-05-20T15:11:07.789Z] database_type: FIRESTORE_NATIVE
+[debug] [2025-05-20T15:11:07.790Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-05-20T15:11:07.791Z] > authorizing via signed-in user (dreiradfreunde3@gmail.com)
+[debug] [2025-05-20T15:11:07.791Z] [iam] checking project dreiradfreunde-56aca for permissions ["firebase.projects.get"]
+[debug] [2025-05-20T15:11:07.793Z] Checked if tokens are valid: true, expires at: 1747757271640
+[debug] [2025-05-20T15:11:07.793Z] Checked if tokens are valid: true, expires at: 1747757271640
+[debug] [2025-05-20T15:11:07.794Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/dreiradfreunde-56aca:testIamPermissions [none]
+[debug] [2025-05-20T15:11:07.794Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/dreiradfreunde-56aca:testIamPermissions x-goog-quota-user=projects/dreiradfreunde-56aca
+[debug] [2025-05-20T15:11:07.794Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/dreiradfreunde-56aca:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2025-05-20T15:11:08.713Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/dreiradfreunde-56aca:testIamPermissions 200
+[debug] [2025-05-20T15:11:08.714Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/dreiradfreunde-56aca:testIamPermissions {"permissions":["firebase.projects.get"]}
+[info] 
+[info] Firestore Security Rules allow you to define how and when to allow
+[info] requests. You can keep these rules in your project directory
+[info] and publish them with firebase deploy.
+[info] 
+[debug] [2025-05-20T15:11:54.829Z] Checked if tokens are valid: true, expires at: 1747757271640
+[debug] [2025-05-20T15:11:54.830Z] Checked if tokens are valid: true, expires at: 1747757271640
+[debug] [2025-05-20T15:11:54.831Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/dreiradfreunde-56aca/releases pageSize=10&pageToken=
+[debug] [2025-05-20T15:11:55.262Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/dreiradfreunde-56aca/releases 200
+[debug] [2025-05-20T15:11:55.263Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/dreiradfreunde-56aca/releases {"releases":[{"name":"projects/dreiradfreunde-56aca/releases/cloud.firestore","rulesetName":"projects/dreiradfreunde-56aca/rulesets/81669c65-43c8-47ec-9bc0-75b38be49d3f","createTime":"2025-05-20T14:14:55.330862Z","updateTime":"2025-05-20T14:14:55.330862Z"}]}
+[debug] [2025-05-20T15:11:55.263Z] Found ruleset: projects/dreiradfreunde-56aca/rulesets/81669c65-43c8-47ec-9bc0-75b38be49d3f
+[debug] [2025-05-20T15:11:55.265Z] Checked if tokens are valid: true, expires at: 1747757271640
+[debug] [2025-05-20T15:11:55.265Z] Checked if tokens are valid: true, expires at: 1747757271640
+[debug] [2025-05-20T15:11:55.265Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/dreiradfreunde-56aca/rulesets/81669c65-43c8-47ec-9bc0-75b38be49d3f [none]
+[debug] [2025-05-20T15:11:55.725Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/dreiradfreunde-56aca/rulesets/81669c65-43c8-47ec-9bc0-75b38be49d3f 200
+[debug] [2025-05-20T15:11:55.727Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/dreiradfreunde-56aca/rulesets/81669c65-43c8-47ec-9bc0-75b38be49d3f [omitted]
+[info] 
+[info] Firestore indexes allow you to perform complex queries while
+[info] maintaining performance that scales with the size of the result
+[info] set. You can keep index definitions in your project directory
+[info] and publish them with firebase deploy.
+[info] 
+[debug] [2025-05-20T15:12:03.275Z] Checked if tokens are valid: true, expires at: 1747757271640
+[debug] [2025-05-20T15:12:03.276Z] Checked if tokens are valid: true, expires at: 1747757271640
+[debug] [2025-05-20T15:12:03.277Z] Checked if tokens are valid: true, expires at: 1747757271640
+[debug] [2025-05-20T15:12:03.277Z] Checked if tokens are valid: true, expires at: 1747757271640
+[debug] [2025-05-20T15:12:03.278Z] >>> [apiv2][query] GET https://firestore.googleapis.com/v1/projects/dreiradfreunde-56aca/databases/(default)/collectionGroups/-/indexes [none]
+[debug] [2025-05-20T15:12:03.286Z] >>> [apiv2][query] GET https://firestore.googleapis.com/v1/projects/dreiradfreunde-56aca/databases/(default)/collectionGroups/-/fields?filter=indexConfig.usesAncestorConfig=false OR ttlConfig:* [none]
+[debug] [2025-05-20T15:12:03.532Z] <<< [apiv2][status] GET https://firestore.googleapis.com/v1/projects/dreiradfreunde-56aca/databases/(default)/collectionGroups/-/indexes 200
+[debug] [2025-05-20T15:12:03.534Z] <<< [apiv2][body] GET https://firestore.googleapis.com/v1/projects/dreiradfreunde-56aca/databases/(default)/collectionGroups/-/indexes {}
+[debug] [2025-05-20T15:12:03.697Z] <<< [apiv2][status] GET https://firestore.googleapis.com/v1/projects/dreiradfreunde-56aca/databases/(default)/collectionGroups/-/fields?filter=indexConfig.usesAncestorConfig=false OR ttlConfig:* 200
+[debug] [2025-05-20T15:12:03.697Z] <<< [apiv2][body] GET https://firestore.googleapis.com/v1/projects/dreiradfreunde-56aca/databases/(default)/collectionGroups/-/fields?filter=indexConfig.usesAncestorConfig=false OR ttlConfig:* {"fields":[{"name":"projects/dreiradfreunde-56aca/databases/(default)/collectionGroups/__default__/fields/*","indexConfig":{"indexes":[{"queryScope":"COLLECTION","fields":[{"fieldPath":"*","order":"ASCENDING"}],"state":"READY"},{"queryScope":"COLLECTION","fields":[{"fieldPath":"*","order":"DESCENDING"}],"state":"READY"},{"queryScope":"COLLECTION","fields":[{"fieldPath":"*","arrayConfig":"CONTAINS"}],"state":"READY"}]}}]}
+[info] 
+=== Genkit Setup
+[warn] ⚠  genkit: Stopped Genkit initialization 
+[info] 
+=== Functions Setup
+[debug] [2025-05-20T15:12:35.606Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-05-20T15:12:35.606Z] > authorizing via signed-in user (dreiradfreunde3@gmail.com)
+[debug] [2025-05-20T15:12:35.606Z] [iam] checking project dreiradfreunde-56aca for permissions ["firebase.projects.get"]
+[debug] [2025-05-20T15:12:35.607Z] Checked if tokens are valid: true, expires at: 1747757271640
+[debug] [2025-05-20T15:12:35.608Z] Checked if tokens are valid: true, expires at: 1747757271640
+[debug] [2025-05-20T15:12:35.608Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/dreiradfreunde-56aca:testIamPermissions [none]
+[debug] [2025-05-20T15:12:35.608Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/dreiradfreunde-56aca:testIamPermissions x-goog-quota-user=projects/dreiradfreunde-56aca
+[debug] [2025-05-20T15:12:35.608Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/dreiradfreunde-56aca:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2025-05-20T15:12:36.371Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/dreiradfreunde-56aca:testIamPermissions 200
+[debug] [2025-05-20T15:12:36.371Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/dreiradfreunde-56aca:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2025-05-20T15:12:36.371Z] Checked if tokens are valid: true, expires at: 1747757271640
+[debug] [2025-05-20T15:12:36.371Z] Checked if tokens are valid: true, expires at: 1747757271640
+[debug] [2025-05-20T15:12:36.372Z] Checked if tokens are valid: true, expires at: 1747757271640
+[debug] [2025-05-20T15:12:36.372Z] Checked if tokens are valid: true, expires at: 1747757271640
+[debug] [2025-05-20T15:12:36.372Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/dreiradfreunde-56aca/services/cloudfunctions.googleapis.com [none]
+[debug] [2025-05-20T15:12:36.372Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/dreiradfreunde-56aca/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/dreiradfreunde-56aca
+[debug] [2025-05-20T15:12:36.375Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/dreiradfreunde-56aca/services/runtimeconfig.googleapis.com [none]
+[debug] [2025-05-20T15:12:36.375Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/dreiradfreunde-56aca/services/runtimeconfig.googleapis.com x-goog-quota-user=projects/dreiradfreunde-56aca
+[debug] [2025-05-20T15:12:37.273Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/dreiradfreunde-56aca/services/cloudfunctions.googleapis.com 200
+[debug] [2025-05-20T15:12:37.273Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/dreiradfreunde-56aca/services/cloudfunctions.googleapis.com [omitted]
+[debug] [2025-05-20T15:12:37.274Z] Checked if tokens are valid: true, expires at: 1747757271640
+[debug] [2025-05-20T15:12:37.274Z] Checked if tokens are valid: true, expires at: 1747757271640
+[debug] [2025-05-20T15:12:37.274Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1/projects/dreiradfreunde-56aca/services/cloudfunctions.googleapis.com:enable [none]
+[debug] [2025-05-20T15:12:37.274Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1/projects/dreiradfreunde-56aca/services/cloudfunctions.googleapis.com:enable x-goog-quota-user=projects/dreiradfreunde-56aca
+[debug] [2025-05-20T15:12:37.299Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/dreiradfreunde-56aca/services/runtimeconfig.googleapis.com 200
+[debug] [2025-05-20T15:12:37.299Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/dreiradfreunde-56aca/services/runtimeconfig.googleapis.com [omitted]
+[debug] [2025-05-20T15:12:38.431Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1/projects/dreiradfreunde-56aca/services/cloudfunctions.googleapis.com:enable 200
+[debug] [2025-05-20T15:12:38.432Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1/projects/dreiradfreunde-56aca/services/cloudfunctions.googleapis.com:enable [omitted]
+[debug] [2025-05-20T15:12:48.438Z] Checked if tokens are valid: true, expires at: 1747757271640
+[debug] [2025-05-20T15:12:48.439Z] Checked if tokens are valid: true, expires at: 1747757271640
+[debug] [2025-05-20T15:12:48.439Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/dreiradfreunde-56aca/services/cloudfunctions.googleapis.com [none]
+[debug] [2025-05-20T15:12:48.440Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/dreiradfreunde-56aca/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/dreiradfreunde-56aca
+[debug] [2025-05-20T15:12:49.506Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/dreiradfreunde-56aca/services/cloudfunctions.googleapis.com 200
+[debug] [2025-05-20T15:12:49.506Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/dreiradfreunde-56aca/services/cloudfunctions.googleapis.com [omitted]
+[info] Let's create a new codebase for your functions.
+[info] A directory corresponding to the codebase will be created in your project
+[info] with sample code pre-configured.
+
+[info] See https://firebase.google.com/docs/functions/organize-functions for
+[info] more information on organizing your functions using codebases.
+
+[info] Functions can be deployed with firebase deploy.
+
+[info] ✔  Wrote functions/package.json 
+[info] ✔  Wrote functions/index.js 
+[info] ✔  Wrote functions/.gitignore 
+[info] 
+[error] NPM install failed, continuing with Firebase initialization...
+[info] 
+=== Storage Setup
+[info] 
+[info] Firebase Storage Security Rules allow you to define how and when to allow
+[info] uploads and downloads. You can keep these rules in your project directory
+[info] and publish them with firebase deploy.
+[info] 
+[info] ✔  Wrote storage.rules 
+[info] 
+=== Emulators Setup

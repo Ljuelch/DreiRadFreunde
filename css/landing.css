@@ -1,6 +1,6 @@
 .banner {
     height: 100vh;
-    background: url("../assets/pierreImg/5.jpeg") no-repeat;
+    background: url("../assets/drfImg/20190527_122826.jpg") no-repeat;
     background-size: cover;
     background-position: center;
     display: flex;
@@ -9,7 +9,7 @@
 
 @media (max-width: 768px) {
     .banner {
-        background: url("../assets/pierreImg/3.jpeg") no-repeat;
+        background: url("../assets/drfImg/IMG_3411.jpeg") no-repeat;
         background-size: cover;
         background-position: center;
     }

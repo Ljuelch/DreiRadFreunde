@@ -39,7 +39,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    background-color: rgba(0, 0, 0, 0.1); /* Semi-transparent black */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -60,23 +60,23 @@
 }
 
 .recent-artists .item-1 {
-    background-image: url('https://i.scdn.co/image/ab6761610000e5ebbaddea6de33c542f12d5d045');
+    background-image: url('../assets/drfImg/IMG_6765.jpeg');
 }
 
 .recent-artists .item-2 {
-    background-image: url('https://i.scdn.co/image/ab6761610000e5ebd442174871d42120c87b8217');
+    background-image: url('../assets/drfImg/IMG_6883.jpeg');
 }
 
 .recent-artists .item-3 {
-    background-image: url('https://i.scdn.co/image/ab6761610000e5eb0cf436fac6c68428c5c8517c');
+    background-image: url('../assets/drfImg/DSC00057.JPG');
 }
 
 .recent-artists .item-4 {
-    background-image: url('https://i.scdn.co/image/ab6761610000f178d374f0cd99cebef583864c13');
+    background-image: url('../assets/drfImg/20190527_122826.jpg');
 }
 
 .recent-artists .item-5 {
-    background-image: url('https://i.scdn.co/image/ab6761610000e5eb46de7a5f725214889c4fff3a');
+    background-image: url('../assets/drfImg/20220628_221935.jpg');
 }
 
 

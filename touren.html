@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tourenübersicht | DreiRadFreunde</title>
+
+    <!-- Styles & Fonts -->
+    <link rel="icon" href="assets/drfImg/IMG_3410.jpeg" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/main.css" />
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: url('assets/drfImg/IMG_6765.jpeg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Space Grotesk', sans-serif;
+            color: #fff;
+            position: relative;
+            min-height: 100vh;
+            z-index: 0;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
+
+        .tour-box {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border-radius: 12px;
+            background: #fff;
+            color: #000;
+        }
+
+        iframe {
+            border: none;
+            width: 100%;
+            height: 600px;
+            margin-top: 1rem;
+        }
+
+        header.bg-dark,
+        footer.bg-dark {
+            background-color: #3a3a3a !important;
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: #fff;
+        }
+
+        .navbar-dark .navbar-nav .nav-link:hover {
+            color: #ccc;
+        }
+
+        h3[id] {
+            scroll-margin-top: 100px;
+        }
+    </style>
+</head>
+<body>
+<main class="app">
+    <!-- Navigation Header -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">DreiRadFreunde</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Startseite</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Touren</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Touren Section -->
+    <section class="container py-5">
+        <div id="tours-container"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light text-center py-3">
+        <p>©2025 DreiRadFreunde | All Rights Reserved</p>
+        <p>Made by Leonardo Jülch</p>
+    </footer>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
+</main>
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyBKQVAV9j_dvd6w7xm8-lW-m30Z9GAW3Jc",
+        authDomain: "dreiradfreunde-56aca.firebaseapp.com",
+        projectId: "dreiradfreunde-56aca",
+        storageBucket: "dreiradfreunde-56aca.appspot.com",
+        messagingSenderId: "289133944113",
+        appId: "1:289133944113:web:a03bc3aec8fd747aa4a410"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const container = document.getElementById("tours-container");
+
+    function slugify(text) {
+        return text.trim().toLowerCase().replace(/\s+/g, '-');
+    }
+
+    async function renderTours() {
+        const snapshot = await db.collection("tours").orderBy("name", "desc").get();
+        const fragment = document.createDocumentFragment();
+
+        for (const doc of snapshot.docs) {
+            const data = doc.data();
+            const div = document.createElement("div");
+            div.className = "tour-box";
+            const tourId = slugify(data.name);
+
+            let html = `<h3 id="${tourId}">${data.name}</h3>`;
+            if (data.description) {
+                html += `<p>${data.description}</p>`;
+            }
+
+            const etappenSnapshot = await db.collection("tours").doc(doc.id).collection("etappen").orderBy("date").get();
+            etappenSnapshot.forEach(etappeDoc => {
+                const etappe = etappeDoc.data();
+                let url = etappe.url;
+
+                if (url.includes("kml_url=")) {
+                    const extracted = new URLSearchParams(url.split("?")[1]).get("kml_url");
+                    if (extracted && extracted.startsWith("https://cyclemeter.com")) {
+                        url = extracted.replace(".kml", "");
+                    }
+                }
+
+                html += `
+            <div class="my-3">
+              <strong>${etappe.date} – ${etappe.title}</strong>
+              <iframe src="${url}" loading="lazy" allowfullscreen></iframe>
+            </div>
+          `;
+            });
+
+            div.innerHTML = html;
+            fragment.appendChild(div);
+        }
+
+        container.appendChild(fragment);
+
+        // Wait a moment to ensure rendering is done before scrolling
+        setTimeout(scrollToHash, 200);
+    }
+
+    function scrollToHash() {
+        const hash = window.location.hash;
+        if (hash) {
+            const id = hash.substring(1); // remove #
+            const target = document.getElementById(id);
+            if (target) {
+                target.scrollIntoView({ behavior: "smooth", block: "start" });
+            } else {
+                console.warn("Element not found for hash:", hash);
+            }
+        }
+    }
+
+    renderTours();
+</script>
+</body>
+</html>

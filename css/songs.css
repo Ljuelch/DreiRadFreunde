@@ -38,13 +38,13 @@
 .sec2 .container .sec2-inner .sec2-slider .item .text .streaming-services .spotify-logo1:before {
     font-size: x-large;
     font-family: FontAwesome, sans-serif;
-    content: "\f1bc";
+    content: "\f4d7";
 }
 
 .sec2 .container .sec2-inner .sec2-slider .item .text .streaming-services .apple-logo1:before {
     font-size: x-large;
     font-family: FontAwesome, sans-serif;
-    content: "\f001";
+    content: "\f4d7";
 }
 
 .sec2 .container .sec2-inner .sec2-slider .item .text .streaming-services .spotify-logo .spotify-text {
@@ -64,14 +64,14 @@
     z-index: 1;
     font-size: x-large;
     font-family: FontAwesome, sans-serif;
-    content: "\f1bc";
+    content: "\f4d7";
 }
 
 .sec2 .container .sec2-inner .sec2-slider .item .text .streaming-services .apple-logo {
     z-index: 1;
     font-size: x-large;
     font-family: FontAwesome, sans-serif;
-    content: "\f001";
+    content: "\f4d7";
 }
 
 .sec2 .container .sec2-inner .sec2-slider .item .text .streaming-services .spotify-logo .spotify-text:hover {
@@ -362,9 +362,9 @@
 
 .slick-prev:before {
     font-family: FontAwesome, sans-serif;
-    content: "\f053";
+    content: "\f4d7";
 }
 .slick-next:before {
     font-family: FontAwesome, sans-serif;
-    content: "\f054";
+    content: "\f4d7";
 }

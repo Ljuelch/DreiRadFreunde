@@ -67,14 +67,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	// Function to handle clicks on Record, Mix, Master
 	function handleServiceLinkClick(event, section, modal) {
-		event.preventDefault(); // Prevent the default link behavior
+		// Prevent the default link behavior
 		scrollToSection(section);
 		openModal(modal);
 	}
 
 	// Function to handle the Contact link click
 	function handleContactLinkClick(event, section) {
-		event.preventDefault(); // Prevent the default link behavior
+		 // Prevent the default link behavior
 		scrollToSection(section);
 	}
 

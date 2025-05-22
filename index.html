@@ -3,10 +3,10 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>GRB-Audio</title>
+        <title>DreiRadFreunde</title>
 
-        <link rel="icon" type="image/x-icon" href="assets/img/background.jpg">
-        <link rel="icon" type="image/x-icon" href="assets/img/grbLogo.jpeg">
+        <link rel="icon" type="image/x-icon" href="assets/drfImg/IMG_3410.jpeg">
+        <link rel="icon" type="image/x-icon" href="assets/drfImg/IMG_3410.jpeg">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
@@ -38,6 +38,9 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.7/js/tether.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/tether@1.4.0/dist/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+        <!-- Firebase SDK (add these before using `firebase`) -->
+        <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
 
         <script src="js/songSlide.js"></script>
         <script src="js/videoSlide.js"></script>
@@ -54,38 +57,23 @@
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="mobile-logo">
-                            <h1 class="mobile-title mobile-media">GRB Audio</h1>
+                            <h1 class="mobile-title mobile-media">DreiRadFreunde</h1>
                         </div>
                         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                             <div class="navbar-nav navbar-align nav-items desktop-view">
                                 <div class="left-menu nav-fill">
                                     <ul>
-                                        <li><a class="nav-link text-light" id="recordLink" href="#" target="_blank">Record</a></li>
-                                        <li><a class="nav-link text-light" id="mixLink" href="#" target="_blank">Mix</a></li>
-                                        <li><a class="nav-link text-light" id="masterLink" href="#" target="_blank">Master</a></li>
+                                        <li><a class="nav-link text-light" id="recordLink" href="touren.html">Tourenübersicht</a></li>
                                     </ul>
                                 </div>
                                 <div class="right-menu">
                                     <ul>
-                                        <li><a class="nav-link text-light" href="https://www.instagram.com/grb_audio?igsh=eHE2d3hrMXdvMG0%3D&utm_source=qr" target="_blank">INSTAGRAM</a></li>
-                                        <li><a class="nav-link text-light" href="https://open.spotify.com/user/pierrerauchtfettelunten?si=c3269669c27c4264" target="_blank">Spotify</a></li>
-                                        <li><a class="nav-link text-light" id="contact-nav-link" href="#" target="_blank">Contact</a></li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="navbar-nav nav-items mobile-view">
                                 <ul>
-                                    <li><a class="nav-link text-light" id="recordLinkMobile" href="#" target="_blank">Record</a></li>
-                                    <br>
-                                    <li><a class="nav-link text-light" id="mixLinkMobile" href="#" target="_blank">Mix</a></li>
-                                    <br>
-                                    <li><a class="nav-link text-light" id="masterLinkMobile" href="#" target="_blank">Master</a></li>
-                                    <br>
-                                    <li><a class="nav-link text-light" href="https://www.instagram.com/grb_audio?igsh=eHE2d3hrMXdvMG0%3D&utm_source=qr" target="_blank">INSTAGRAM</a></li>
-                                    <br>
-                                    <li><a class="nav-link text-light" href="https://open.spotify.com/user/pierrerauchtfettelunten?si=c3269669c27c4264" target="_blank">Spotify</a></li>
-                                    <br>
-                                    <li><a class="nav-link text-light" id="contactLinkMobile" href="#" target="_blank">Contact</a></li>
+                                    <li><a class="nav-link text-light" id="recordLinkMobile" href="touren.html">Tourenübersicht</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -96,318 +84,57 @@
             <section class="banner pb-3" data-scene>
                 <div class="container">
                     <div class="text landing-text" data-aos="zoom-out" data-aos-delay="1000">
-                        <h1>Pierre Jülch</h1>
+                        <h1>DreiRadFreunde</h1>
                     </div>
                     <div class="go-to-helper">
                         <a href="#" class="go-to go-to-mobile"></a>
                     </div>
                 </div>
             </section>
-            <!--
-                        <section class="sec1" id="page-content" data-scene>
-                            <div class="container landing-text">
-                                <div class="sec1-inner">
-                                    <div class="text text-right" data-aos="zoom-out-left">
-                                        <img class="grb-logo" src="assets/img/grb%20Logo.jpeg" alt="logo">
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
 
 
-                        <section class="divider text-center ">
-                            <div class="row align-items-center justify-content-center">
-                                <div class="col">
-                                    <hr class="hr mx-auto hr-left" />
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fa-solid fa-sliders h3"></i>
-                                </div>
-                                <div class="col">
-                                    <hr class="hr mx-auto hr-right" />
-                                </div>
-                            </div>
-                        </section>
-
-                        -->
-
-            <section class="services-feature pb-3" id="services-helper" data-aos="zoom-in-left">
+            <section class="intro-text-section py-5"  id="services-helper" data-aos="fade-up">
                 <div class="container">
-                    <div class="row">
-                        <div class="col-md-4 col-sm-12">
-                            <div class="box box-1" data-modal-id="recordModal">
-                                <div class="box-content">
-                                    <i class="fa-solid fa-microphone box-content-font"></i>
-                                    <p class="box-content-font box-content-font-info">Record</p>
-                                    <p class="underline-service"></p>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="col-md-4 col-sm-12">
-                            <div class="box box-2" data-modal-id="mixModal">
-                                <div class="box-content">
-                                    <i class="fa-solid fa-compact-disc box-content-font"></i>
-                                    <p class="box-content-font box-content-font-info">Mix</p>
-                                    <p class="underline-service"></p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4 col-sm-12">
-                            <div class="box box-3" data-modal-id="masterModal">
-                                <div class="box-content">
-                                    <i class="fa-solid fa-sliders box-content-font"></i>
-                                    <p class="box-content-font box-content-font-info">Master</p>
-                                    <p class="underline-service"></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="modal-overlay">
-                        <div id="recordModal" class="modal">
-                            <div class="modal-content">
-                                <span class="close">&times;</span>
-                                <h2>Step by Step:</h2>
-                                <h3> Wie funktioniert das Recording?</h3>
-                                <div class="icon-row">
-                                    <div class="icon-item">
-                                        <i class="fa-solid fa-hand-holding-heart"></i>
-                                        <p>Kontaktiere mich via Motion oder email</p>
-                                    </div>
-                                    <div class="icon-item">
-                                        <i class="fa-solid fa-upload"></i>
-                                        <p>Sende mir deinen Beat fürs Recording</p>
-                                    </div>
-                                    <div class="icon-item">
-                                        <i class="fa-solid fa-microphone-lines"></i>
-                                        <p>Komm ins Studio für die Session</p>
-                                    </div>
-                                    <div class="icon-item">
-                                        <i class="fa-solid fa-download"></i>
-                                        <p>Ich sende dir die Spuren zu</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="mixModal" class="modal">
-                            <div class="modal-content">
-                                <span class="close">&times;</span>
-                                <h2>Step by Step:</h2>
-                                <h3> Wie funktioniert das Mixing?</h3>
-                                <div class="icon-row">
-                                    <div class="icon-item">
-                                        <i class="fa-solid fa-hand-holding-heart"></i>
-                                        <p>Kontaktiere mich via Motion oder email</p>
-                                    </div>
-                                    <div class="icon-item">
-                                        <i class="fa-solid fa-upload"></i>
-                                        <p>Sende mir deine Stems für den Mix</p>
-                                    </div>
-                                    <div class="icon-item">
-                                        <i class="fa-solid fa-gears"></i>
-                                        <p>Ich mixe deinen Track</p>
-                                    </div>
-                                    <div class="icon-item">
-                                        <i class="fa-solid fa-download"></i>
-                                        <p>Und sende dir den Mix zu</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="masterModal" class="modal">
-                        <div class="modal-content">
-                            <span class="close">&times;</span>
-                            <h2>Step by Step:</h2>
-                            <h3> Wie funktioniert das Mastering?</h3>
-                            <div class="icon-row">
-                                <div class="icon-item">
-                                    <i class="fa-solid fa-hand-holding-heart"></i>
-                                    <p>Kontaktiere mich via Motion oder email</p>
-                                </div>
-                                <div class="icon-item">
-                                    <i class="fa-solid fa-upload"></i>
-                                    <p>Sende mir die Stems/Song für den Master</p>
-                                </div>
-                                <div class="icon-item">
-                                    <i class="fa-solid fa-gears"></i>
-                                    <p>Ich master deinen Track</p>
-                                </div>
-                                <div class="icon-item">
-                                    <i class="fa-solid fa-download"></i>
-                                    <p>Und sende dir den Master zu</p>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="text-center">
+                        <h2 class="display-5 fw-bold mb-3">Willkommen bei den DreiRadFreunden!</h2>
+                        <p class="lead mb-4">
+                            Wir sind drei Freunde, die seit Kindheitstagen gemeinsam radeln – quer durch Deutschland und manchmal darüber hinaus.
+                            Unsere Lieblingsstrecken? Wasserradwege – aber wir weichen gern auch mal ab und schweifen ins weite Land.
+                        </p>
+                        <p class="mb-4">
+                            Auf dieser privaten Seite teilen wir unsere Touren samt Routenlinks, Eindrücken und bald auch Tipps zu Übernachtungen
+                            und Streckenplanung. Wir hoffen, dass unsere Erfahrungen anderen Radbegeisterten bei der Planung helfen können.
+                            <br>
+                            Frei nach dem Motto:
+                        </p>
+                        <p class="fst-italic">
+                            "Ein Radfahrer muss seinen Hintern besser pflegen als sein Gesicht."
+                        </p>
+                        <p class="fw-semibold">– Das Team DreiRadFreunde</p>
                     </div>
                 </div>
             </section>
 
 
-
-            <div class="container pb-3" data-aos="zoom-in-down">
-                <div class="row">
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/6EO8C8FAUdychjlkMwjGeW?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                    </div>
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/08gptZYe54a1akkcI3lYhn?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                    </div>
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/4GGMoHq3pyibur80ZExjA6?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="container recent-artists pb-3">
-                <h1>Recent Artists</h1>
+            <div class="container recent-artists pb-3 pt-1">
+                <h1>Unsere letzten Touren</h1>
 
                 <div class="gallery-wrap">
-                    <div class="item item-1">
-                        <div class="overlay">
-                            <p class="artist-name">Mäx Modestus</p>
-                        </div>
-                        <div class="overlay pt-5">
-                            <div class="presave spotify-logo fs-1 pt-5">
-                                <a title="Spotify" href="https://open.spotify.com/intl-de/artist/19Qu65WLH9NWStheiGAdxj?si=wXu8voXlQJ6pEXzX6NoWvQ" target="_blank"><i class="fa-brands fa-spotify out-now-hover-spotify"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item item-2">
-                        <div class="overlay">
-                            <p class="artist-name">zlato1.5</p>
-                        </div>
-                        <div class="overlay pt-5">
-                            <div class="presave spotify-logo fs-1 pt-5">
-                                <a title="Spotify" href="https://open.spotify.com/intl-de/artist/2q1WHufNKknvEDy8loCR4O?si=NaXXbNuVT7ePVyggxv7S2g" target="_blank"><i class="fa-brands fa-spotify out-now-hover-spotify"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item item-3">
-                        <div class="overlay">
-                            <p class="artist-name">DEMASO</p>
-                        </div>
-                        <div class="overlay pt-5">
-                            <div class="presave spotify-logo fs-1 pt-5">
-                                <a title="Spotify" href="https://open.spotify.com/intl-de/artist/0uN19S11fpDRb97XJ6uwni?si=wyjDbc-_RvGYpw9gc6DRkA" target="_blank"><i class="fa-brands fa-spotify out-now-hover-spotify"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item item-4">
-                        <div class="overlay">
-                            <p class="artist-name">AKABASE</p>
-                        </div>
-                        <div class="overlay pt-5">
-                            <div class="presave spotify-logo fs-1 pt-5">
-                                <a title="Spotify" href="https://open.spotify.com/intl-de/artist/4qB2frv64HgC4s8tSLZtbB?si=kkCRduQSTQWdC3sTLQEoPw" target="_blank"><i class="fa-brands fa-spotify out-now-hover-spotify"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item item-5">
-                        <div class="overlay">
-                            <p class="artist-name">Tiyoto</p>
-                        </div>
-                        <div class="overlay pt-5">
-                            <div class="presave spotify-logo fs-1 pt-5">
-                                <a title="Spotify" href="https://open.spotify.com/intl-de/artist/1WudhOnkqlXOpEXgFLKgqJ?si=UV_MYCFrSzG4zy1mcJllIw" target="_blank"><i class="fa-brands fa-spotify out-now-hover-spotify"></i></a>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
-
-            <iframe id="contactSection" src="https://app.usemotion.com/meet/grb-audio/meeting" title="Motion Booking Page" width="100%" height="840px" frameborder="0"></iframe>
-
-            <!--
-
-                        <section class="secVid"  data-scene>
-                            <div class="container">
-                                <div class="secVid-inner" data-aos="zoom-in-down">
-                                    <h2>Musikvideos</h2>
-                                    <div class="video-box" id="sec-vid-helper"></div>
-                                    <div class="secVid-slider videos">
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-
-
-            <section class="secVid" data-scene>
-                <div class="container">
-                    <h2>NEXT UP</h2>
-                    <div class="sec1-inner sec-vid-inner" data-aos="zoom-in-down">
-                        <div class="next-up-container row">
-                            <div class="col-12 pic-container">
-                                <img class="next-up-pic" src="assets/img/VodkaMate_cover.png" alt="">
-                            </div>
-                            <div class="col-12">
-                                <p class="release-date mb-0">Release Date: <br>31 Mai 2024</p>
-                            </div>
-                            <div class="presave">
-                                <a href="https://distrokid.com/hyperfollow/zlato15moedidnwakeup/vodka-mate"><i class="fa-solid fa-link"></i> Click here to Presave</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-
-
-            <section class="secVid" data-scene>
-                <div class="container">
-                    <h2>OUT NOW</h2>
-                    <div class="sec1-inner sec-vid-inner" data-aos="zoom-in-down">
-                        <div class="next-up-container row">
-                            <div class="col-12 pic-container">
-                                <img class="next-up-pic" src="assets/img/VodkaMate_cover.png" alt="">
-                            </div>
-                            <div class="presave spotify-logo d-flex justify-content-around pt-4 fs-1">
-                                <a title="Spotify" href="https://open.spotify.com/intl-de/track/20ChEPSE2G0XoY3RdQahgx?si=f79fc71707464499"><i class="fa-brands fa-spotify out-now-hover-spotify"></i></a>
-                                <a title="Apple Music" href="https://music.apple.com/us/album/vodka-mate/1748522087?i=1748522088"><i class="fa-solid fa-music out-now-hover-apple"></i></a>
-                                <a title="Deezer" href="https://deezer.page.link/sN8n1JvbDStzKeQa9"><i class="fa-brands fa-deezer out-now-hover-deezer"></i></a>
-                                <a title="Youtube" href="https://youtu.be/comSGAWSmU8?si=d9mWVh_PCWE_AG_g"><i class="fa-brands fa-youtube out-now-hover-youtube"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="sec2" data-scene>
-                <div class="container">
-                    <div class="sec2-inner" data-aos="zoom-in-up">
-                        <h2>Releases</h2>
-                        <div class="sec2-slider songs">
-                        </div>
-                    </div>
-                </div>
-            </section>
- -->
             <footer data-scene>
                 <div class="container">
                     <div class="footer-inner" data-aos="zoom-in-up">
                         <div class="col">
                             <div class="text">
-                                <h2>GRB Audio</h2>
+                                <h2>DreiRadFreunde</h2>
                             </div>
                         </div>
                         <div class="col">
                             <ul>
-
-                                <li><a href="https://www.instagram.com/grb_audio?igsh=eHE2d3hrMXdvMG0%3D&utm_source=qr" target="_blank">Instagram</a></li>
-                                <li><a href="https://open.spotify.com/user/pierrerauchtfettelunten?si=c3269669c27c4264" target="_blank">Spotify</a></li>
-                            </ul>
-                        </div>
-                        <div class="col">
-                            <ul>
                                 <li><a href="imprint.html" target="_blank" rel="noopener noreferrer">Impressum</a></li>
-                                <li><a href="kontakt@grb-audio.de">Business Mail: kontakt@grb-audio.de</a></li>
+                                <li><a href="kontakt@grb-audio.de">Mail: dreiradfreunde@gmail.com</a></li>
                             </ul>
                         </div>
                     </div>
@@ -436,12 +163,64 @@
 
             <div class="copyright">
                 <div class="container" data-aos="zoom-in-up" data-aos-offset="0">
-                    <p>© 2024 GRB Records | All Rights Reserved</p>
-                    <p>Design: Leonardo Jülch</p>
+                    <p>©2025 DreiRadFreunde | All Rights Reserved</p>
+                    <p>Made by Leonardo Jülch</p>
                 </div>
             </div>
 
         </main>
 
     </body>
+    <script>
+        firebase.initializeApp({
+            apiKey: "AIzaSyBKQVAV9j_dvd6w7xm8-lW-m30Z9GAW3Jc",
+            authDomain: "dreiradfreunde-56aca.firebaseapp.com",
+            projectId: "dreiradfreunde-56aca"
+        });
+
+        const db = firebase.firestore();
+        const recentWrap = document.querySelector(".gallery-wrap");
+
+        // Image filenames from /assets/drfImg/
+        const backgrounds = [
+            "IMG_6765.jpeg",
+            "IMG_6883.jpeg",
+            "DSC00057.JPG",
+            "20190527_122826.jpg",
+            "20220628_221935.jpg"
+        ];
+
+        db.collection("tours").orderBy("name", "desc").limit(5).get().then((snapshot) => {
+            snapshot.docs.forEach((doc, index) => {
+                const data = doc.data();
+                const id = data.name.replace(/\s+/g, '-').toLowerCase(); // for anchor link
+                const background = `assets/drfImg/${backgrounds[index % backgrounds.length]}`;
+
+                const div = document.createElement("div");
+                div.className = "item";
+                div.style.backgroundImage = `url('${background}')`;
+                div.style.backgroundSize = "cover";
+                div.style.backgroundPosition = "center";
+
+                div.innerHTML = `
+                <div class="overlay pb-3">
+                    <p class="artist-name">${data.name}</p>
+                </div>
+                <div class="overlay pt-5">
+                    <div class="presave route-logo fs-1 pt-5">
+                        <a title="Zur Tour" href="touren.html#${id}">
+                            <i class="fa-solid fa-route out-now-hover-spotify"></i>
+                        </a>
+                    </div>
+                </div>
+            `;
+
+                recentWrap.appendChild(div);
+            });
+        }).catch((error) => {
+            console.error("Fehler beim Laden der Touren:", error);
+        });
+    </script>
+
+
 </html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Admin – DreiRadFreunde</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="icon" type="image/png" href="assets/drfImg/IMG_6765.jpeg">
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
+    <style>
+        body {
+            background: url('assets/drfImg/IMG_6765.jpeg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            font-family: 'Space Grotesk', sans-serif;
+            position: relative;
+        }
+
+        /* dark overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.6); /* adjust for more or less darkness */
+            z-index: -1;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.85);
+            color: #000;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+
+        h1, h3, h5 {
+            color: #111;
+        }
+
+        .btn-outline-secondary {
+            color: #333;
+            border-color: #333;
+        }
+
+        .btn-outline-secondary:hover {
+            background-color: #333;
+            color: #fff;
+        }
+    </style>
+</head>
+<body class="p-4">
+<div class="container">
+    <h1 class="mb-4">Admin Bereich – DreiRadFreunde</h1>
+
+    <form id="fullTourForm">
+        <!-- Tour Info -->
+        <div class="mb-2">
+            <label class="form-label">Jahr + Name</label>
+            <input type="text" id="tourId" class="form-control" placeholder="z.B. 2022 Radweg Deutsche Einheit" required />
+        </div>
+        <div class="mb-2">
+            <label class="form-label">Beschreibung</label>
+            <textarea id="tourDesc" class="form-control"></textarea>
+        </div>
+
+        <!-- Etappen -->
+        <h5 class="mt-4">Etappen</h5>
+        <div id="etappenContainer"></div>
+
+        <button type="button" id="addEtappeBtn" class="btn btn-outline-secondary my-2">+ Etappe hinzufügen</button>
+
+        <!-- Submit -->
+        <button class="btn btn-primary d-block mt-3" type="submit">Tour + Etappen speichern</button>
+    </form>
+</div>
+
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyBKQVAV9j_dvd6w7xm8-lW-m30Z9GAW3Jc",
+        authDomain: "dreiradfreunde-56aca.firebaseapp.com",
+        projectId: "dreiradfreunde-56aca",
+        storageBucket: "dreiradfreunde-56aca.firebasestorage.app",
+        messagingSenderId: "289133944113",
+        appId: "1:289133944113:web:a03bc3aec8fd747aa4a410"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    const etappenContainer = document.getElementById('etappenContainer');
+    const addEtappeBtn = document.getElementById('addEtappeBtn');
+
+    // Initial Etappe field
+    addEtappeField();
+
+    addEtappeBtn.addEventListener('click', addEtappeField);
+
+    function addEtappeField() {
+        const wrapper = document.createElement('div');
+        wrapper.classList.add('etappe-group', 'border', 'p-3', 'mb-3', 'rounded');
+        wrapper.innerHTML = `
+        <div class="mb-2">
+          <label class="form-label">Datum</label>
+          <input type="date" class="form-control etappe-date" required>
+        </div>
+        <div class="mb-2">
+          <label class="form-label">Titel</label>
+          <input type="text" class="form-control etappe-title" required>
+        </div>
+        <div class="mb-2">
+          <label class="form-label">Cyclemeter Link</label>
+          <input type="url" class="form-control etappe-url" required>
+        </div>
+        <button type="button" class="btn btn-sm btn-danger remove-etappe-btn">– Etappe entfernen</button>
+      `;
+        etappenContainer.appendChild(wrapper);
+
+        wrapper.querySelector('.remove-etappe-btn').addEventListener('click', () => {
+            wrapper.remove();
+        });
+    }
+
+    document.getElementById('fullTourForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const id = document.getElementById('tourId').value.trim();
+        const description = document.getElementById('tourDesc').value.trim();
+        const etappeGroups = document.querySelectorAll('.etappe-group');
+
+        if (etappeGroups.length === 0) {
+            alert("Mindestens eine Etappe hinzufügen!");
+            return;
+        }
+
+        try {
+            await db.collection('tours').doc(id).set({ name: id, description });
+
+            for (const group of etappeGroups) {
+                const date = group.querySelector('.etappe-date').value;
+                const title = group.querySelector('.etappe-title').value.trim();
+                const url = group.querySelector('.etappe-url').value.trim();
+
+                await db.collection('tours').doc(id).collection('etappen').add({ date, title, url });
+            }
+
+            alert("Tour und Etappen erfolgreich gespeichert!");
+            e.target.reset();
+            etappenContainer.innerHTML = '';
+            addEtappeField();
+        } catch (err) {
+            console.error(err);
+            alert("Fehler beim Speichern.");
+        }
+    });
+</script>
+
+</body>
+</html>
