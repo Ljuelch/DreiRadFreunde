@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tour Import - DreiRadFreunde</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
+    <style>
+        body {
+            background: #f8f9fa;
+            font-family: 'Space Grotesk', sans-serif;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 800px;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .import-textarea {
+            min-height: 400px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .preview-item {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .etappe-placeholder {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 0.5rem;
+            margin: 0.25rem 0;
+            border-radius: 4px;
+            font-style: italic;
+            color: #856404;
+        }
+        .log-output {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 1rem;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Tour Import Tool</h1>
+    <p class="text-muted">Kopieren Sie Ihre Tour-Daten in das Textfeld und klicken Sie auf "Importieren"</p>
+
+    <div class="mb-3">
+        <label for="importData" class="form-label">Tour-Daten (Text-Format)</label>
+        <textarea class="form-control import-textarea" id="importData" placeholder="Fügen Sie hier Ihre Tour-Daten ein..."></textarea>
+    </div>
+
+    <div class="mb-3">
+        <button class="btn btn-secondary" onclick="parseData()">Daten analysieren</button>
+        <button class="btn btn-primary" onclick="importData()" disabled id="importBtn">Importieren</button>
+        <button class="btn btn-warning" onclick="clearData()">Zurücksetzen</button>
+    </div>
+
+    <div id="preview" style="display: none;">
+        <h3>Vorschau</h3>
+        <div id="previewContent"></div>
+    </div>
+
+    <div id="log" style="display: none;">
+        <h3>Import-Log</h3>
+        <div id="logContent" class="log-output"></div>
+    </div>
+</div>
+
+<script>
+    // Firebase Config
+    const firebaseConfig = {
+        apiKey: "AIzaSyBKQVAV9j_dvd6w7xm8-lW-m30Z9GAW3Jc",
+        authDomain: "dreiradfreunde-56aca.firebaseapp.com",
+        projectId: "dreiradfreunde-56aca",
+        storageBucket: "dreiradfreunde-56aca.appspot.com",
+        messagingSenderId: "289133944113",
+        appId: "1:289133944113:web:a03bc3aec8fd747aa4a410"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    let parsedTours = [];
+
+    function logMessage(message, type = 'info') {
+        const logDiv = document.getElementById('log');
+        const logContent = document.getElementById('logContent');
+        logDiv.style.display = 'block';
+
+        const timestamp = new Date().toLocaleTimeString();
+        const logEntry = document.createElement('div');
+        logEntry.className = type === 'error' ? 'text-danger' : type === 'success' ? 'text-success' : 'text-info';
+        logEntry.textContent = `[${timestamp}] ${message}`;
+        logContent.appendChild(logEntry);
+        logContent.scrollTop = logContent.scrollHeight;
+    }
+
+    function parseData() {
+        const input = document.getElementById('importData').value.trim();
+        if (!input) {
+            alert('Bitte fügen Sie Tour-Daten ein');
+            return;
+        }
+
+        logMessage('Beginne Datenanalyse...');
+        parsedTours = [];
+
+        const lines = input.split('\n').map(line => line.trim()).filter(line => line);
+        let currentTour = null;
+
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i];
+
+            // Tour-Header erkennen (Jahr + Name, keine URL, keine Etappe)
+            const tourMatch = line.match(/^(\d{4})\s+(.+?)(?:\s*>>>|\s*<<<)?$/);
+            if (tourMatch && !line.includes('http') && !line.includes('Etappe') && !line.includes('etappe')) {
+                // Vorherige Tour speichern
+                if (currentTour) {
+                    parsedTours.push(currentTour);
+                }
+
+                const year = tourMatch[1];
+                const name = line.replace(/\s*>>>|\s*<<</, '').trim();
+
+                currentTour = {
+                    name: name,
+                    year: parseInt(year),
+                    description: '',
+                    etappen: []
+                };
+                logMessage(`Tour gefunden: ${name}`);
+            }
+            // Etappe erkennen (auch mit kleinem 'e')
+            else if ((line.includes('Etappe') || line.includes('etappe')) && currentTour) {
+                const etappeMatch = line.match(/^(\d{4}-\d{2}-\d{2})\s+(.+)$/);
+                if (etappeMatch) {
+                    const date = etappeMatch[1];
+                    const title = etappeMatch[2];
+
+                    // Schaue nach URL in den nächsten Zeilen (bis zu 3 Zeilen voraus)
+                    let url = '???';
+                    for (let j = 1; j <= 3; j++) {
+                        if (i + j < lines.length) {
+                            const nextLine = lines[i + j].trim();
+                            if (nextLine.startsWith('http')) {
+                                url = nextLine;
+                                // Überspringe die gefundenen Zeilen nicht automatisch,
+                                // da sie vom äußeren Loop behandelt werden
+                                break;
+                            }
+                            // Stoppe wenn eine neue Etappe oder Tour beginnt
+                            if (nextLine.includes('Etappe') || nextLine.includes('etappe') ||
+                                nextLine.match(/^\d{4}\s+/)) {
+                                break;
+                            }
+                        }
+                    }
+
+                    currentTour.etappen.push({
+                        date: date,
+                        title: title,
+                        url: url
+                    });
+                    logMessage(`  Etappe: ${title} (${url === '???' ? 'KEIN LINK' : 'Link vorhanden'})`);
+                }
+            }
+            // Überspringe reine URL-Zeilen (werden von Etappen-Parsing behandelt)
+            else if (line.startsWith('http')) {
+                // Diese Zeile wird bereits von der Etappen-Erkennung verarbeitet
+                continue;
+            }
+        }
+
+        // Letzte Tour speichern
+        if (currentTour) {
+            parsedTours.push(currentTour);
+        }
+
+        // Touren ohne Etappen behandeln
+        parsedTours.forEach(tour => {
+            if (tour.etappen.length === 0) {
+                tour.etappen.push({
+                    date: '???',
+                    title: '???',
+                    url: '???'
+                });
+                logMessage(`Tour "${tour.name}" hat keine Etappen - Platzhalter hinzugefügt`, 'warning');
+            }
+        });
+
+        displayPreview();
+        document.getElementById('importBtn').disabled = parsedTours.length === 0;
+        logMessage(`Analyse abgeschlossen. ${parsedTours.length} Touren gefunden.`, 'success');
+    }
+
+    function displayPreview() {
+        const preview = document.getElementById('preview');
+        const content = document.getElementById('previewContent');
+
+        if (parsedTours.length === 0) {
+            preview.style.display = 'none';
+            return;
+        }
+
+        preview.style.display = 'block';
+        content.innerHTML = '';
+
+        parsedTours.forEach((tour, index) => {
+            const tourDiv = document.createElement('div');
+            tourDiv.className = 'preview-item';
+
+            let etappenHtml = '';
+            tour.etappen.forEach(etappe => {
+                const isPlaceholder = etappe.date === '???' || etappe.title === '???' || etappe.url === '???';
+                const className = isPlaceholder ? 'etappe-placeholder' : '';
+                etappenHtml += `
+                        <div class="${className}">
+                            <strong>${etappe.date}</strong> - ${etappe.title}
+                            ${etappe.url !== '???' ? `<br><small>${etappe.url}</small>` : '<br><small class="text-warning">⚠️ Kein Link vorhanden</small>'}
+                        </div>
+                    `;
+            });
+
+            tourDiv.innerHTML = `
+                    <h5>${tour.name} (${tour.year})</h5>
+                    <p class="text-muted">${tour.etappen.length} Etappe(n)</p>
+                    ${etappenHtml}
+                `;
+            content.appendChild(tourDiv);
+        });
+    }
+
+    async function importData() {
+        if (parsedTours.length === 0) {
+            alert('Keine Daten zum Importieren vorhanden');
+            return;
+        }
+
+        const importBtn = document.getElementById('importBtn');
+        importBtn.disabled = true;
+        importBtn.textContent = 'Importiere...';
+
+        logMessage(`Starte Import von ${parsedTours.length} Touren...`, 'info');
+
+        try {
+            for (const tour of parsedTours) {
+                logMessage(`Importiere Tour: ${tour.name}`);
+
+                // Tour in Firestore speichern
+                const tourRef = db.collection('tours').doc(tour.name);
+                await tourRef.set({
+                    name: tour.name,
+                    description: tour.description
+                });
+
+                // Etappen speichern
+                for (const etappe of tour.etappen) {
+                    await tourRef.collection('etappen').add({
+                        date: etappe.date,
+                        title: etappe.title,
+                        url: etappe.url
+                    });
+                    logMessage(`  + Etappe: ${etappe.title}`);
+                }
+            }
+
+            logMessage('Import erfolgreich abgeschlossen!', 'success');
+            alert('Alle Touren wurden erfolgreich importiert!');
+
+        } catch (error) {
+            logMessage(`Import-Fehler: ${error.message}`, 'error');
+            alert(`Fehler beim Import: ${error.message}`);
+        } finally {
+            importBtn.disabled = false;
+            importBtn.textContent = 'Importieren';
+        }
+    }
+
+    function clearData() {
+        document.getElementById('importData').value = '';
+        document.getElementById('preview').style.display = 'none';
+        document.getElementById('log').style.display = 'none';
+        document.getElementById('logContent').innerHTML = '';
+        document.getElementById('importBtn').disabled = true;
+        parsedTours = [];
+    }
+
+    // Beispiel-Daten laden
+    window.addEventListener('load', () => {
+        const exampleData = `2002 Bodenseeradweg >>>
+2003 Bodenseeradweg <<<
+2004 Donau - Altmühltal - Radweg
+2005 Elberadweg
+2006 Mosel - Rhein - Radweg
+
+2010 Mainradweg
+
+2011 Ruhrtal - Rhein - Radweg
+
+2011-06-18 Etappe 1 von Frankenberg nach Winterberg
+https://osm.quelltextlich.at/viewer-js.html?kml_url=http://share.abvio.com/fe94/6e9a/4d3c/76c9/Cyclemeter-Cycle-20110618-1357.kml
+
+2011-06-19 Etappe 2 von Winterberg nach Olsberg
+https://osm.quelltextlich.at/viewer-js.html?kml_url=http://share.abvio.com/fe94/6e9a/4d3c/76c9/Cyclemeter-Cycle-20110619-1100.kml`;
+
+        // document.getElementById('importData').value = exampleData;
+    });
+</script>
+</body>
+</html>

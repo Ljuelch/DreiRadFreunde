@@ -324,6 +324,36 @@
             scroll-margin-top: 100px;
         }
 
+        .etappe-disabled {
+            background-color: #f8f9fa !important;
+            cursor: default !important;
+        }
+
+        .etappe-disabled:hover {
+            background-color: #f8f9fa !important;
+        }
+
+        .etappe-disabled .etappe-title {
+            color: #6c757d !important;
+        }
+
+        .etappe-disabled .etappe-toggle {
+            color: #6c757d !important;
+            cursor: default !important;
+        }
+
+        .etappe-disabled .etappe-toggle:hover {
+            color: #6c757d !important;
+            transform: none !important;
+        }
+
+        .etappe-placeholder-info {
+            font-size: 0.8rem;
+            color: #6c757d;
+            font-style: italic;
+            margin-top: 0.25rem;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .tour-header {
@@ -542,32 +572,58 @@
 
         if (!etappenData) {
             contentElement.innerHTML = `
-                <div class="loading-placeholder">
-                    <i class="fas fa-spinner loading-spinner"></i>
-                    Lade Tour-Daten...
-                </div>
-            `;
+            <div class="loading-placeholder">
+                <i class="fas fa-spinner loading-spinner"></i>
+                Lade Tour-Daten...
+            </div>
+        `;
             return;
         }
 
         let html = '';
         etappenData.forEach((etappe, index) => {
+            // Prüfe ob Etappe ausklappbar ist
+            const hasValidUrl = etappe.url && etappe.url !== '???' && etappe.url.startsWith('http');
+            const isPlaceholder = etappe.date === '???' || etappe.title === '???' || etappe.url === '???';
+            const isDisabled = !hasValidUrl || isPlaceholder;
+
+            const disabledClass = isDisabled ? 'etappe-disabled' : '';
+            const clickHandler = isDisabled ? '' : `onclick="toggleEtappe('${tourId}', ${index})"`;
+
+            let infoText = '';
+            if (isPlaceholder) {
+                infoText = '<div class="etappe-placeholder-info">⚠️ Daten noch nicht verfügbar</div>';
+            } else if (!hasValidUrl) {
+                infoText = '<div class="etappe-placeholder-info">⚠️ Streckeninformationen noch nicht verfügbar</div>';
+            }
+
             html += `
-                <div class="etappe-item" data-etappe-index="${index}">
-                    <div class="etappe-header" onclick="toggleEtappe('${tourId}', ${index})">
+            <div class="etappe-item ${disabledClass}" data-etappe-index="${index}">
+                <div class="etappe-header" ${clickHandler}>
+                    <div>
                         <h5 class="etappe-title">${etappe.date} – ${etappe.title}</h5>
+                        ${infoText}
+                    </div>
+                    ${!isDisabled ? `
                         <button class="etappe-toggle" type="button">
                             <i class="fas fa-chevron-down"></i>
                         </button>
-                    </div>
+                    ` : `
+                        <button class="etappe-toggle" type="button" disabled>
+                            <i class="fas fa-ban"></i>
+                        </button>
+                    `}
+                </div>
+                ${!isDisabled ? `
                     <div class="etappe-content" id="etappe-${tourId}-${index}">
                         <div class="loading-placeholder">
                             <i class="fas fa-map-marked-alt"></i>
                             Klicken zum Laden der Streckeninformationen...
                         </div>
                     </div>
-                </div>
-            `;
+                ` : ''}
+            </div>
+        `;
         });
 
         contentElement.innerHTML = html;

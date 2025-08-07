@@ -140,6 +140,26 @@
             margin-top: 0.25rem;
         }
 
+        .etappe-placeholder {
+            background-color: #fff3cd !important;
+            border-left: 4px solid #ffc107 !important;
+        }
+
+        .etappe-placeholder .etappe-info strong {
+            color: #856404 !important;
+        }
+
+        .etappe-placeholder .etappe-info small {
+            color: #856404 !important;
+        }
+
+        .placeholder-warning {
+            font-size: 0.8rem;
+            color: #856404;
+            font-style: italic;
+            margin-top: 0.25rem;
+        }
+
         .btn-toggle-etappen {
             background: none;
             border: 1px solid #6c757d;
@@ -558,25 +578,25 @@
                 const headerDiv = document.createElement('div');
                 headerDiv.className = 'tour-header';
                 headerDiv.innerHTML = `
-                    <div class="tour-info">
-                        <h6>${data.name}</h6>
-                        <small class="text-muted">
-                            ${etappenCount} Etappe${etappenCount !== 1 ? 'n' : ''}
-                            ${data.description ? ' • ' + data.description.substring(0, 50) + (data.description.length > 50 ? '...' : '') : ''}
-                        </small>
-                    </div>
-                    <div class="d-flex gap-2">
-                        <button type="button" class="btn btn-toggle-etappen btn-sm" data-tour-id="${doc.id}">
-                            Etappen anzeigen
-                        </button>
-                        <button type="button" class="btn btn-outline-warning btn-sm edit-tour-btn" data-tour-id="${doc.id}" data-tour-name="${data.name}">
-                            Bearbeiten
-                        </button>
-                        <button type="button" class="btn btn-outline-danger btn-sm delete-tour-btn" data-tour-id="${doc.id}" data-tour-name="${data.name}">
-                            Löschen
-                        </button>
-                    </div>
-                `;
+                <div class="tour-info">
+                    <h6>${data.name}</h6>
+                    <small class="text-muted">
+                        ${etappenCount} Etappe${etappenCount !== 1 ? 'n' : ''}
+                        ${data.description ? ' • ' + data.description.substring(0, 50) + (data.description.length > 50 ? '...' : '') : ''}
+                    </small>
+                </div>
+                <div class="d-flex gap-2">
+                    <button type="button" class="btn btn-toggle-etappen btn-sm" data-tour-id="${doc.id}">
+                        Etappen anzeigen
+                    </button>
+                    <button type="button" class="btn btn-outline-warning btn-sm edit-tour-btn" data-tour-id="${doc.id}" data-tour-name="${data.name}">
+                        Bearbeiten
+                    </button>
+                    <button type="button" class="btn btn-outline-danger btn-sm delete-tour-btn" data-tour-id="${doc.id}" data-tour-name="${data.name}">
+                        Löschen
+                    </button>
+                </div>
+            `;
 
                 const etappenDiv = document.createElement('div');
                 etappenDiv.className = 'etappen-list';
@@ -586,23 +606,41 @@
                     etappenSnapshot.forEach(etappeDoc => {
                         const etappe = etappeDoc.data();
                         const etappeItem = document.createElement('div');
+
+                        // Prüfe auf Platzhalter
+                        const isPlaceholder = etappe.date === '???' || etappe.title === '???' || etappe.url === '???';
+                        const hasNoValidUrl = !etappe.url || etappe.url === '???' || !etappe.url.startsWith('http');
+
                         etappeItem.className = 'etappe-item';
+                        if (isPlaceholder || hasNoValidUrl) {
+                            etappeItem.classList.add('etappe-placeholder');
+                        }
+
+                        let warningText = '';
+                        if (isPlaceholder) {
+                            warningText = '<div class="placeholder-warning">⚠️ Platzhalter-Daten - bitte vervollständigen</div>';
+                        } else if (hasNoValidUrl) {
+                            warningText = '<div class="placeholder-warning">⚠️ Kein gültiger Link vorhanden</div>';
+                        }
+
                         etappeItem.innerHTML = `
-                            <div class="etappe-info">
-                                <strong>${etappe.date} – ${etappe.title}</strong>
-                                <small>
-                                    <a href="${etappe.url}" target="_blank" class="text-decoration-none">
-                                        🔗 Link anzeigen
-                                    </a>
-                                </small>
-                            </div>
-                            <button class="btn btn-outline-danger btn-sm delete-etappe-btn"
-                                    data-tour-id="${doc.id}"
-                                    data-etappe-id="${etappeDoc.id}"
-                                    data-etappe-title="${etappe.title}">
-                                Etappe löschen
-                            </button>
-                        `;
+                        <div class="etappe-info">
+                            <strong>${etappe.date} – ${etappe.title}</strong>
+                            <small>
+                                ${etappe.url && etappe.url !== '???' && etappe.url.startsWith('http')
+                            ? `<a href="${etappe.url}" target="_blank" class="text-decoration-none">🔗 Link anzeigen</a>`
+                            : '<span class="text-muted">🔗 Kein Link verfügbar</span>'
+                        }
+                            </small>
+                            ${warningText}
+                        </div>
+                        <button class="btn btn-outline-danger btn-sm delete-etappe-btn"
+                                data-tour-id="${doc.id}"
+                                data-etappe-id="${etappeDoc.id}"
+                                data-etappe-title="${etappe.title}">
+                            Etappe löschen
+                        </button>
+                    `;
                         etappenDiv.appendChild(etappeItem);
                     });
                 } else {
