@@ -1,14 +1,14 @@
 
 .hr-right {
     border: 0;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid #000;
     width: 70%;
     margin: 0;
 }
 
 .hr-left {
     border: 0;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid #000;
     width: 70%;
     margin: 0;
 }
@@ -21,7 +21,7 @@
 .hr-left,
 .hr-right {
     border: 0;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid #000;
     width: 70%;
     margin: 0;
     transform: scaleX(0);

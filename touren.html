@@ -9,6 +9,7 @@
     <link rel="icon" href="assets/drfImg/IMG_3410.jpeg" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="css/main.css" />
     <style>
         html {
@@ -23,6 +24,8 @@
             position: relative;
             min-height: 100vh;
             z-index: 0;
+            display: flex;
+            flex-direction: column;
         }
 
         body::before {
@@ -36,78 +39,377 @@
             z-index: -1;
         }
 
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content-wrapper {
+            flex: 1;
+        }
+
+        .breadcrumb-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .breadcrumb {
+            background: transparent;
+            margin: 0;
+        }
+
+        .breadcrumb-item a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.2s ease;
+        }
+
+        .breadcrumb-item a:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .breadcrumb-item.active {
+            color: #007bff;
+            font-weight: 600;
+        }
+
+        .year-section {
+            margin-bottom: 3rem;
+        }
+
+        .year-anchor {
+            scroll-margin-top: 120px;
+        }
+
+        /* Tour Box Styles */
         .tour-box {
             margin-bottom: 2rem;
-            padding: 1.5rem;
             border-radius: 12px;
             background: #fff;
             color: #000;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
         }
 
+        .tour-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+        }
+
+        /* Tour Header */
+        .tour-header {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-bottom: 1px solid #dee2e6;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .tour-header:hover {
+            background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+        }
+
+        .tour-header-info {
+            flex: 1;
+        }
+
+        .tour-header h3 {
+            margin: 0 0 0.5rem 0;
+            color: #333;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .tour-description {
+            color: #666;
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .tour-stats {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .tour-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .tour-toggle {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #000000;
+            transition: all 0.3s ease;
+            padding: 0.5rem;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tour-toggle:hover {
+            background-color: #000000;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .tour-toggle.expanded:hover {
+            background-color: #000000;
+            color: white;
+            transform: rotate(180deg) scale(1.1);
+        }
+
+        .tour-toggle.expanded {
+            transform: rotate(180deg);
+        }
+
+        /* Tour Content */
+        .tour-content {
+            display: none;
+            padding: 0;
+            background: #fff;
+        }
+
+        .tour-content.expanded {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                max-height: 0;
+            }
+            to {
+                opacity: 1;
+                max-height: 1000px;
+            }
+        }
+
+        /* Etappe Styles */
+        .etappe-item {
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+        }
+
+        .etappe-item:last-child {
+            border-bottom: none;
+        }
+
+        .etappe-header {
+            padding: 1rem 1.5rem;
+            background: #fafafa;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .etappe-header:hover {
+            background: #f0f0f0;
+        }
+
+        .etappe-title {
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+
+        .etappe-toggle {
+            background: none;
+            border: none;
+            color: #28a745;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .etappe-toggle:hover {
+            color: #1e7e34;
+            transform: scale(1.1);
+        }
+
+        .etappe-toggle.expanded {
+            transform: rotate(180deg);
+        }
+
+        .etappe-toggle.expanded:hover {
+            color: #1e7e34;
+            transform: rotate(180deg) scale(1.1);
+        }
+
+        .etappe-content {
+            display: none;
+            padding: 1.5rem;
+            background: #fff;
+        }
+
+        .etappe-content.expanded {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Loading States */
+        .loading-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+            background: #f8f9fa;
+            color: #6c757d;
+            font-style: italic;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            margin-right: 0.5rem;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Iframe Styles */
         iframe {
             border: none;
             width: 100%;
             height: 600px;
-            margin-top: 1rem;
+            border-radius: 8px;
+            background: #f8f9fa;
         }
 
+        /* Header & Footer */
         header.bg-dark,
         footer.bg-dark {
-            background-color: #3a3a3a !important;
+            background-color: #ffffff !important;
+            color: #000000 !important;
         }
 
         .navbar-dark .navbar-nav .nav-link {
-            color: #fff;
+            color: #000000;
         }
 
         .navbar-dark .navbar-nav .nav-link:hover {
-            color: #ccc;
+            color: gray;
         }
 
         h3[id] {
             scroll-margin-top: 100px;
         }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .tour-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .tour-stats {
+                justify-content: flex-start;
+                flex-wrap: wrap;
+            }
+
+            .tour-toggle {
+                align-self: center;
+            }
+        }
+
+        /* Status Indicators */
+        .status-loaded {
+            color: #28a745;
+        }
+
+        .status-loading {
+            color: #ffc107;
+        }
+
+        .status-error {
+            color: #dc3545;
+        }
     </style>
 </head>
 <body>
 <main class="app">
-    <!-- Navigation Header -->
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container">
-                <a class="navbar-brand" href="index.html">DreiRadFreunde</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.html">Startseite</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Touren</a>
-                        </li>
-                    </ul>
+    <div class="content-wrapper">
+        <!-- Navigation Header -->
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgba(240, 248, 255, 0.8);">
+                <div class="container">
+                    <a class="navbar-brand" style="color: #000000" href="index.html">DreiRadFreunde</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html">Startseite</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">Touren</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
-    </header>
+            </nav>
+        </header>
 
-    <!-- Touren Section -->
-    <section class="container py-5">
-        <div id="tours-container"></div>
-    </section>
+        <!-- Breadcrumbs -->
+        <section class="container pt-4">
+            <div class="breadcrumb-container">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb" id="year-breadcrumb">
+                        <!-- Jahres-Breadcrumbs werden hier eingefügt -->
+                    </ol>
+                </nav>
+            </div>
+        </section>
+
+        <!-- Touren Section -->
+        <section class="container pb-5">
+            <div id="tours-container"></div>
+        </section>
+    </div>
 
     <!-- Footer -->
     <footer class="bg-dark text-light text-center py-3">
         <p>©2025 DreiRadFreunde | All Rights Reserved</p>
         <p>Made by Leonardo Jülch</p>
     </footer>
-
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
 </main>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
     const firebaseConfig = {
         apiKey: "AIzaSyBKQVAV9j_dvd6w7xm8-lW-m30Z9GAW3Jc",
@@ -121,31 +423,88 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
     const container = document.getElementById("tours-container");
+    const breadcrumb = document.getElementById("year-breadcrumb");
+
+    // Global state management
+    const tourState = {
+        loadedEtappen: new Map(), // Cache für bereits geladene Etappen
+        preloadQueue: [], // Queue für Preloading
+        isPreloading: false
+    };
+
+    function extractYear(tourName) {
+        const match = tourName.match(/^(\d{4})/);
+        return match ? parseInt(match[1]) : null;
+    }
 
     function slugify(text) {
         return text.trim().toLowerCase().replace(/\s+/g, '-');
     }
 
-    async function renderTours() {
-        const snapshot = await db.collection("tours").orderBy("name", "desc").get();
-        const fragment = document.createDocumentFragment();
+    function createBreadcrumbs(years) {
+        breadcrumb.innerHTML = '';
+        years.forEach((year, index) => {
+            const li = document.createElement('li');
+            li.className = 'breadcrumb-item';
 
-        for (const doc of snapshot.docs) {
-            const data = doc.data();
-            const div = document.createElement("div");
-            div.className = "tour-box";
-            const tourId = slugify(data.name);
+            const link = document.createElement('a');
+            link.href = `#year-${year}`;
+            link.textContent = year;
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                scrollToYear(year);
+            });
 
-            let html = `<h3 id="${tourId}">${data.name}</h3>`;
-            if (data.description) {
-                html += `<p>${data.description}</p>`;
-            }
+            li.appendChild(link);
+            breadcrumb.appendChild(li);
+        });
+    }
 
-            const etappenSnapshot = await db.collection("tours").doc(doc.id).collection("etappen").orderBy("date").get();
+    function scrollToYear(year) {
+        const yearElement = document.getElementById(`year-${year}`);
+        if (yearElement) {
+            yearElement.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }
+    }
+
+    // Intersection Observer für Lazy Loading
+    function createIntersectionObserver() {
+        return new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const tourId = entry.target.dataset.tourId;
+                    if (tourId && !tourState.loadedEtappen.has(tourId)) {
+                        preloadTourData(tourId);
+                    }
+                }
+            });
+        }, {
+            root: null,
+            rootMargin: '200px', // Lade 200px bevor Element sichtbar wird
+            threshold: 0.1
+        });
+    }
+
+    // Preload Tour-Daten im Hintergrund
+    async function preloadTourData(tourId) {
+        if (tourState.loadedEtappen.has(tourId) || tourState.isPreloading) {
+            return;
+        }
+
+        tourState.isPreloading = true;
+
+        try {
+            const etappenSnapshot = await db.collection("tours").doc(tourId).collection("etappen").orderBy("date").get();
+            const etappenData = [];
+
             etappenSnapshot.forEach(etappeDoc => {
                 const etappe = etappeDoc.data();
                 let url = etappe.url;
 
+                // URL-Verarbeitung
                 if (url.includes("kml_url=")) {
                     const extracted = new URLSearchParams(url.split("?")[1]).get("kml_url");
                     if (extracted && extracted.startsWith("https://cyclemeter.com")) {
@@ -153,16 +512,210 @@
                     }
                 }
 
-                html += `
-            <div class="my-3">
-              <strong>${etappe.date} – ${etappe.title}</strong>
-              <iframe src="${url}" loading="lazy" allowfullscreen></iframe>
-            </div>
-          `;
+                etappenData.push({
+                    id: etappeDoc.id,
+                    date: etappe.date,
+                    title: etappe.title,
+                    url: url,
+                    loaded: false
+                });
             });
 
-            div.innerHTML = html;
-            fragment.appendChild(div);
+            tourState.loadedEtappen.set(tourId, etappenData);
+
+            // Update UI wenn Tour bereits aufgeklappt ist
+            const tourContent = document.querySelector(`[data-tour-id="${tourId}"] .tour-content`);
+            if (tourContent && tourContent.classList.contains('expanded')) {
+                renderTourContent(tourId, tourContent);
+            }
+
+        } catch (error) {
+            console.error('Fehler beim Vorladen der Tour-Daten:', error);
+        } finally {
+            tourState.isPreloading = false;
+        }
+    }
+
+    // Tour Content rendern
+    function renderTourContent(tourId, contentElement) {
+        const etappenData = tourState.loadedEtappen.get(tourId);
+
+        if (!etappenData) {
+            contentElement.innerHTML = `
+                <div class="loading-placeholder">
+                    <i class="fas fa-spinner loading-spinner"></i>
+                    Lade Tour-Daten...
+                </div>
+            `;
+            return;
+        }
+
+        let html = '';
+        etappenData.forEach((etappe, index) => {
+            html += `
+                <div class="etappe-item" data-etappe-index="${index}">
+                    <div class="etappe-header" onclick="toggleEtappe('${tourId}', ${index})">
+                        <h5 class="etappe-title">${etappe.date} – ${etappe.title}</h5>
+                        <button class="etappe-toggle" type="button">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="etappe-content" id="etappe-${tourId}-${index}">
+                        <div class="loading-placeholder">
+                            <i class="fas fa-map-marked-alt"></i>
+                            Klicken zum Laden der Streckeninformationen...
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+
+        contentElement.innerHTML = html;
+    }
+
+    // Tour aufklappen/zuklappen
+    function toggleTour(tourId) {
+        const tourBox = document.querySelector(`[data-tour-id="${tourId}"]`);
+        const content = tourBox.querySelector('.tour-content');
+        const toggleButton = tourBox.querySelector('.tour-toggle');
+
+        if (content.classList.contains('expanded')) {
+            // Zuklappen
+            content.classList.remove('expanded');
+            toggleButton.classList.remove('expanded');
+            toggleButton.innerHTML = '<i class="fas fa-chevron-down"></i>';
+        } else {
+            // Aufklappen
+            content.classList.add('expanded');
+            toggleButton.classList.add('expanded');
+            toggleButton.innerHTML = '<i class="fas fa-chevron-up"></i>';
+
+            // Content rendern falls noch nicht geschehen
+            if (!tourState.loadedEtappen.has(tourId)) {
+                preloadTourData(tourId).then(() => {
+                    renderTourContent(tourId, content);
+                });
+            } else {
+                renderTourContent(tourId, content);
+            }
+        }
+    }
+
+    // Einzelne Etappe aufklappen/zuklappen
+    function toggleEtappe(tourId, etappeIndex) {
+        const etappeContent = document.getElementById(`etappe-${tourId}-${etappeIndex}`);
+        const etappeHeader = etappeContent.previousElementSibling;
+        const toggleButton = etappeHeader.querySelector('.etappe-toggle i');
+
+        if (etappeContent.classList.contains('expanded')) {
+            // Zuklappen
+            etappeContent.classList.remove('expanded');
+            toggleButton.className = 'fas fa-chevron-down';
+        } else {
+            // Aufklappen
+            etappeContent.classList.add('expanded');
+            toggleButton.className = 'fas fa-chevron-up';
+
+            // Iframe lazy loaden
+            const etappenData = tourState.loadedEtappen.get(tourId);
+            if (etappenData && etappenData[etappeIndex] && !etappenData[etappeIndex].loaded) {
+                loadEtappeIframe(tourId, etappeIndex, etappenData[etappeIndex]);
+            }
+        }
+    }
+
+    // Iframe für Etappe laden
+    function loadEtappeIframe(tourId, etappeIndex, etappeData) {
+        const etappeContent = document.getElementById(`etappe-${tourId}-${etappeIndex}`);
+
+        // Direkt Iframe erstellen ohne Loading-Spinner
+        etappeContent.innerHTML = `
+            <iframe
+                src="${etappeData.url}"
+                loading="lazy"
+                allowfullscreen
+            ></iframe>
+        `;
+
+        // Markiere als geladen
+        etappeData.loaded = true;
+    }
+
+    // Hauptfunktion zum Rendern der Touren
+    async function renderTours() {
+        const snapshot = await db.collection("tours").orderBy("name", "desc").get();
+        const fragment = document.createDocumentFragment();
+        const toursByYear = {};
+        const years = [];
+        const observer = createIntersectionObserver();
+
+        // Gruppiere Touren nach Jahren
+        for (const doc of snapshot.docs) {
+            const data = doc.data();
+            const year = extractYear(data.name);
+
+            if (year) {
+                if (!toursByYear[year]) {
+                    toursByYear[year] = [];
+                    years.push(year);
+                }
+                toursByYear[year].push({ doc, data });
+            }
+        }
+
+        // Sortiere Jahre absteigend
+        years.sort((a, b) => b - a);
+        createBreadcrumbs(years);
+
+        // Rendere Touren gruppiert nach Jahren
+        for (const year of years) {
+            // Unsichtbarer Jahr-Anker
+            const yearAnchor = document.createElement("div");
+            yearAnchor.className = "year-anchor";
+            yearAnchor.id = `year-${year}`;
+            fragment.appendChild(yearAnchor);
+
+            // Touren für dieses Jahr
+            for (const { doc, data } of toursByYear[year]) {
+                const div = document.createElement("div");
+                div.className = "tour-box";
+                div.dataset.tourId = doc.id;
+                const tourId = slugify(data.name);
+
+                // Zähle Etappen für Statistik
+                const etappenSnapshot = await db.collection("tours").doc(doc.id).collection("etappen").get();
+                const etappenCount = etappenSnapshot.size;
+
+                div.innerHTML = `
+                    <div class="tour-header" onclick="toggleTour('${doc.id}')">
+                        <div class="tour-header-info">
+                            <h3 id="${tourId}">${data.name}</h3>
+                            ${data.description ? `<p class="tour-description">${data.description}</p>` : ''}
+                            <div class="tour-stats">
+                                <div class="tour-stat">
+                                    <i class="fas fa-route"></i>
+                                    <span>${etappenCount} Etappe${etappenCount !== 1 ? 'n' : ''}</span>
+                                </div>
+                                <div class="tour-stat">
+                                    <i class="fas fa-calendar"></i>
+                                    <span>${year}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="tour-toggle" type="button">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="tour-content">
+                        <!-- Content wird bei Bedarf geladen -->
+                    </div>
+                `;
+
+                fragment.appendChild(div);
+
+                // Füge zum Intersection Observer hinzu
+                observer.observe(div);
+            }
         }
 
         container.appendChild(fragment);
@@ -174,7 +727,7 @@
     function scrollToHash() {
         const hash = window.location.hash;
         if (hash) {
-            const id = hash.substring(1); // remove #
+            const id = hash.substring(1);
             const target = document.getElementById(id);
             if (target) {
                 target.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -184,6 +737,11 @@
         }
     }
 
+    // Globale Funktionen für onclick Events
+    window.toggleTour = toggleTour;
+    window.toggleEtappe = toggleEtappe;
+
+    // Initialisierung
     renderTours();
 </script>
 </body>

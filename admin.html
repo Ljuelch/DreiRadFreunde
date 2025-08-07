@@ -6,7 +6,9 @@
     <title>Admin – DreiRadFreunde</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <link rel="icon" type="image/png" href="assets/drfImg/IMG_6765.jpeg">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
     <style>
         body {
@@ -17,7 +19,6 @@
             position: relative;
         }
 
-        /* dark overlay */
         body::before {
             content: '';
             position: fixed;
@@ -25,7 +26,7 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.6); /* adjust for more or less darkness */
+            background: rgba(0, 0, 0, 0.6);
             z-index: -1;
         }
 
@@ -35,6 +36,27 @@
             padding: 2rem;
             border-radius: 12px;
             box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+
+        .login-container {
+            max-width: 400px;
+            margin: 0 auto;
+            margin-top: 10vh;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
         h1, h3, h5 {
@@ -50,32 +72,283 @@
             background-color: #333;
             color: #fff;
         }
+
+        .section-divider {
+            border-top: 2px solid #dee2e6;
+            margin: 3rem 0 2rem 0;
+            padding-top: 2rem;
+        }
+
+        .tour-item {
+            background: rgba(248, 249, 250, 0.8);
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .tour-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .tour-info h6 {
+            margin: 0 0 0.5rem 0;
+            color: #333;
+        }
+
+        .tour-info small {
+            color: #666;
+        }
+
+        .etappen-list {
+            border-top: 1px solid #dee2e6;
+            padding-top: 1rem;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .etappen-list.show {
+            display: block;
+        }
+
+        .etappe-item {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .etappe-info {
+            flex: 1;
+        }
+
+        .etappe-info strong {
+            color: #495057;
+            font-size: 0.9rem;
+        }
+
+        .etappe-info small {
+            color: #6c757d;
+            display: block;
+            margin-top: 0.25rem;
+        }
+
+        .btn-toggle-etappen {
+            background: none;
+            border: 1px solid #6c757d;
+            color: #6c757d;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .btn-toggle-etappen:hover {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-outline-danger {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+
+        .btn-outline-danger:hover {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-outline-warning {
+            border-color: #ffc107;
+            color: #ffc107;
+        }
+
+        .btn-outline-warning:hover {
+            background-color: #ffc107;
+            color: #000;
+        }
+
+        #tours-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .loading {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+        }
+
+        #editSection {
+            display: none;
+        }
+
+        #editSection.show {
+            display: block;
+        }
+
+        .edit-header {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .edit-header h3 {
+            color: #856404;
+            margin-bottom: 0.5rem;
+        }
+
+        .edit-header small {
+            color: #856404;
+        }
+
+        /* Hide admin content until logged in */
+        #adminContent {
+            display: none;
+        }
+
+        #loginSection {
+            display: block;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-header h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-header p {
+            color: #666;
+        }
+
+        .alert {
+            margin-top: 1rem;
+        }
     </style>
 </head>
 <body class="p-4">
-<div class="container">
-    <h1 class="mb-4">Admin Bereich – DreiRadFreunde</h1>
 
-    <form id="fullTourForm">
-        <!-- Tour Info -->
-        <div class="mb-2">
-            <label class="form-label">Jahr + Name</label>
-            <input type="text" id="tourId" class="form-control" placeholder="z.B. 2022 Radweg Deutsche Einheit" required />
-        </div>
-        <div class="mb-2">
-            <label class="form-label">Beschreibung</label>
-            <textarea id="tourDesc" class="form-control"></textarea>
+<!-- Login Section -->
+<div id="loginSection">
+    <div class="container login-container">
+        <div class="login-header">
+            <h1>DreiRadFreunde Admin</h1>
+            <p>Bitte melde dich an, um fortzufahren</p>
         </div>
 
-        <!-- Etappen -->
-        <h5 class="mt-4">Etappen</h5>
-        <div id="etappenContainer"></div>
+        <form id="loginForm">
+            <div class="mb-3">
+                <label for="loginEmail" class="form-label">E-Mail</label>
+                <input type="email" class="form-control" id="loginEmail" required>
+            </div>
+            <div class="mb-3">
+                <label for="loginPassword" class="form-label">Passwort</label>
+                <input type="password" class="form-control" id="loginPassword" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Anmelden</button>
+        </form>
 
-        <button type="button" id="addEtappeBtn" class="btn btn-outline-secondary my-2">+ Etappe hinzufügen</button>
+        <div id="loginError" class="alert alert-danger" style="display: none;"></div>
+        <div id="loginLoading" class="loading" style="display: none; margin-top: 1rem;">Anmeldung läuft...</div>
+    </div>
+</div>
 
-        <!-- Submit -->
-        <button class="btn btn-primary d-block mt-3" type="submit">Tour + Etappen speichern</button>
-    </form>
+<!-- Admin Content -->
+<div id="adminContent">
+    <div class="container">
+        <div class="admin-header">
+            <h1>Admin Bereich – DreiRadFreunde</h1>
+            <div class="user-info">
+                <span id="userEmail" class="text-muted"></span>
+                <button id="logoutBtn" class="btn btn-outline-secondary btn-sm">Abmelden</button>
+            </div>
+        </div>
+
+        <!-- Neue Tour erstellen -->
+        <div id="createSection">
+            <form id="fullTourForm">
+                <h3 class="mb-3">Neue Tour erstellen</h3>
+
+                <!-- Tour Info -->
+                <div class="mb-2">
+                    <label class="form-label">Jahr + Name</label>
+                    <input type="text" id="tourId" class="form-control" placeholder="z.B. 2022 Radweg Deutsche Einheit" required />
+                </div>
+                <div class="mb-2">
+                    <label class="form-label">Beschreibung</label>
+                    <textarea id="tourDesc" class="form-control"></textarea>
+                </div>
+
+                <!-- Etappen -->
+                <h5 class="mt-4">Etappen</h5>
+                <div id="etappenContainer"></div>
+
+                <button type="button" id="addEtappeBtn" class="btn btn-outline-secondary my-2">+ Etappe hinzufügen</button>
+
+                <!-- Submit -->
+                <button class="btn btn-primary d-block mt-3" type="submit">Tour + Etappen speichern</button>
+            </form>
+        </div>
+
+        <!-- Tour bearbeiten -->
+        <div id="editSection">
+            <div class="edit-header">
+                <h3>Tour bearbeiten</h3>
+                <small>Du bearbeitest gerade eine vorhandene Tour. Änderungen werden gespeichert.</small>
+            </div>
+
+            <form id="editTourForm">
+                <!-- Tour Info -->
+                <div class="mb-2">
+                    <label class="form-label">Jahr + Name</label>
+                    <input type="text" id="editTourId" class="form-control" required readonly />
+                    <small class="text-muted">Der Tour-Name kann nicht geändert werden</small>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label">Beschreibung</label>
+                    <textarea id="editTourDesc" class="form-control"></textarea>
+                </div>
+
+                <!-- Etappen -->
+                <h5 class="mt-4">Etappen</h5>
+                <div id="editEtappenContainer"></div>
+
+                <button type="button" id="editAddEtappeBtn" class="btn btn-outline-secondary my-2">+ Etappe hinzufügen</button>
+
+                <!-- Submit -->
+                <div class="d-flex gap-2 mt-3">
+                    <button class="btn btn-success" type="submit">Änderungen speichern</button>
+                    <button type="button" class="btn btn-secondary" id="cancelEditBtn">Bearbeitung abbrechen</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Divider -->
+        <div class="section-divider"></div>
+
+        <!-- Touren löschen -->
+        <div>
+            <h3 class="mb-3">Vorhandene Touren verwalten</h3>
+            <p class="text-muted">Hier kannst du vorhandene Touren bearbeiten oder löschen. <strong>Achtung:</strong> Das Löschen kann nicht rückgängig gemacht werden!</p>
+
+            <button id="loadToursBtn" class="btn btn-outline-secondary mb-3">Touren laden</button>
+
+            <div id="tours-list"></div>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -89,17 +362,104 @@
     };
 
     firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
     const db = firebase.firestore();
 
+    // Auth elements
+    const loginSection = document.getElementById('loginSection');
+    const adminContent = document.getElementById('adminContent');
+    const loginForm = document.getElementById('loginForm');
+    const loginError = document.getElementById('loginError');
+    const loginLoading = document.getElementById('loginLoading');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const userEmail = document.getElementById('userEmail');
+
+    // Admin elements
     const etappenContainer = document.getElementById('etappenContainer');
     const addEtappeBtn = document.getElementById('addEtappeBtn');
+    const loadToursBtn = document.getElementById('loadToursBtn');
+    const toursList = document.getElementById('tours-list');
+    const createSection = document.getElementById('createSection');
+    const editSection = document.getElementById('editSection');
+    const editEtappenContainer = document.getElementById('editEtappenContainer');
+    const editAddEtappeBtn = document.getElementById('editAddEtappeBtn');
+    const cancelEditBtn = document.getElementById('cancelEditBtn');
 
-    // Initial Etappe field
-    addEtappeField();
+    let currentEditTourId = null;
 
-    addEtappeBtn.addEventListener('click', addEtappeField);
+    // Auth state listener
+    auth.onAuthStateChanged((user) => {
+        if (user) {
+            showAdminContent(user);
+        } else {
+            showLoginForm();
+        }
+    });
 
-    function addEtappeField() {
+    function showLoginForm() {
+        loginSection.style.display = 'block';
+        adminContent.style.display = 'none';
+        loginError.style.display = 'none';
+        loginLoading.style.display = 'none';
+    }
+
+    function showAdminContent(user) {
+        loginSection.style.display = 'none';
+        adminContent.style.display = 'block';
+        userEmail.textContent = user.email;
+
+        // Initialize admin functionality
+        initializeAdmin();
+    }
+
+    function initializeAdmin() {
+        // Initial Etappe field
+        addEtappeField();
+
+        // Event listeners
+        addEtappeBtn.addEventListener('click', () => addEtappeField());
+        editAddEtappeBtn.addEventListener('click', () => addEtappeField(true));
+        loadToursBtn.addEventListener('click', loadTours);
+        cancelEditBtn.addEventListener('click', cancelEdit);
+    }
+
+    // Login form handler
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+
+        loginError.style.display = 'none';
+        loginLoading.style.display = 'block';
+
+        try {
+            await auth.signInWithEmailAndPassword(email, password);
+        } catch (error) {
+            loginLoading.style.display = 'none';
+            loginError.style.display = 'block';
+
+            switch (error.code) {
+                case 'auth/user-not-found':
+                case 'auth/wrong-password':
+                    loginError.textContent = 'Ungültige E-Mail oder Passwort.';
+                    break;
+                case 'auth/too-many-requests':
+                    loginError.textContent = 'Zu viele fehlgeschlagene Anmeldeversuche. Bitte versuche es später erneut.';
+                    break;
+                default:
+                    loginError.textContent = 'Anmeldung fehlgeschlagen. Bitte versuche es erneut.';
+            }
+        }
+    });
+
+    // Logout button handler
+    logoutBtn.addEventListener('click', () => {
+        auth.signOut();
+    });
+
+    function addEtappeField(isEdit = false) {
+        const container = isEdit ? editEtappenContainer : etappenContainer;
         const wrapper = document.createElement('div');
         wrapper.classList.add('etappe-group', 'border', 'p-3', 'mb-3', 'rounded');
         wrapper.innerHTML = `
@@ -117,19 +477,243 @@
         </div>
         <button type="button" class="btn btn-sm btn-danger remove-etappe-btn">– Etappe entfernen</button>
       `;
-        etappenContainer.appendChild(wrapper);
+        container.appendChild(wrapper);
 
         wrapper.querySelector('.remove-etappe-btn').addEventListener('click', () => {
             wrapper.remove();
         });
     }
 
+    function cancelEdit() {
+        editSection.classList.remove('show');
+        createSection.style.display = 'block';
+        currentEditTourId = null;
+
+        document.getElementById('editTourForm').reset();
+        editEtappenContainer.innerHTML = '';
+    }
+
+    async function editTour(tourId, tourName) {
+        try {
+            currentEditTourId = tourId;
+
+            createSection.style.display = 'none';
+            editSection.classList.add('show');
+
+            const tourDoc = await db.collection('tours').doc(tourId).get();
+            const tourData = tourDoc.data();
+
+            document.getElementById('editTourId').value = tourData.name;
+            document.getElementById('editTourDesc').value = tourData.description || '';
+
+            editEtappenContainer.innerHTML = '';
+
+            const etappenSnapshot = await db.collection('tours').doc(tourId).collection('etappen').orderBy('date').get();
+
+            etappenSnapshot.forEach(etappeDoc => {
+                const etappe = etappeDoc.data();
+                addEtappeField(true);
+
+                const lastEtappeGroup = editEtappenContainer.lastElementChild;
+                lastEtappeGroup.querySelector('.etappe-date').value = etappe.date;
+                lastEtappeGroup.querySelector('.etappe-title').value = etappe.title;
+                lastEtappeGroup.querySelector('.etappe-url').value = etappe.url;
+                lastEtappeGroup.dataset.etappeId = etappeDoc.id;
+            });
+
+            if (etappenSnapshot.empty) {
+                addEtappeField(true);
+            }
+
+            editSection.scrollIntoView({ behavior: 'smooth' });
+
+        } catch (error) {
+            console.error('Fehler beim Laden der Tour:', error);
+            alert('Fehler beim Laden der Tour-Daten.');
+        }
+    }
+
+    async function loadTours() {
+        toursList.innerHTML = '<div class="loading">Lade Touren...</div>';
+
+        try {
+            const snapshot = await db.collection('tours').orderBy('name', 'desc').get();
+
+            if (snapshot.empty) {
+                toursList.innerHTML = '<p class="text-muted">Keine Touren gefunden.</p>';
+                return;
+            }
+
+            toursList.innerHTML = '';
+
+            for (const doc of snapshot.docs) {
+                const data = doc.data();
+                const etappenSnapshot = await db.collection('tours').doc(doc.id).collection('etappen').orderBy('date').get();
+                const etappenCount = etappenSnapshot.size;
+
+                const tourDiv = document.createElement('div');
+                tourDiv.className = 'tour-item';
+                tourDiv.id = `tour-${doc.id}`;
+
+                const headerDiv = document.createElement('div');
+                headerDiv.className = 'tour-header';
+                headerDiv.innerHTML = `
+                    <div class="tour-info">
+                        <h6>${data.name}</h6>
+                        <small class="text-muted">
+                            ${etappenCount} Etappe${etappenCount !== 1 ? 'n' : ''}
+                            ${data.description ? ' • ' + data.description.substring(0, 50) + (data.description.length > 50 ? '...' : '') : ''}
+                        </small>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button type="button" class="btn btn-toggle-etappen btn-sm" data-tour-id="${doc.id}">
+                            Etappen anzeigen
+                        </button>
+                        <button type="button" class="btn btn-outline-warning btn-sm edit-tour-btn" data-tour-id="${doc.id}" data-tour-name="${data.name}">
+                            Bearbeiten
+                        </button>
+                        <button type="button" class="btn btn-outline-danger btn-sm delete-tour-btn" data-tour-id="${doc.id}" data-tour-name="${data.name}">
+                            Löschen
+                        </button>
+                    </div>
+                `;
+
+                const etappenDiv = document.createElement('div');
+                etappenDiv.className = 'etappen-list';
+                etappenDiv.id = `etappen-${doc.id}`;
+
+                if (etappenCount > 0) {
+                    etappenSnapshot.forEach(etappeDoc => {
+                        const etappe = etappeDoc.data();
+                        const etappeItem = document.createElement('div');
+                        etappeItem.className = 'etappe-item';
+                        etappeItem.innerHTML = `
+                            <div class="etappe-info">
+                                <strong>${etappe.date} – ${etappe.title}</strong>
+                                <small>
+                                    <a href="${etappe.url}" target="_blank" class="text-decoration-none">
+                                        🔗 Link anzeigen
+                                    </a>
+                                </small>
+                            </div>
+                            <button class="btn btn-outline-danger btn-sm delete-etappe-btn"
+                                    data-tour-id="${doc.id}"
+                                    data-etappe-id="${etappeDoc.id}"
+                                    data-etappe-title="${etappe.title}">
+                                Etappe löschen
+                            </button>
+                        `;
+                        etappenDiv.appendChild(etappeItem);
+                    });
+                } else {
+                    etappenDiv.innerHTML = '<p class="text-muted small">Keine Etappen vorhanden.</p>';
+                }
+
+                tourDiv.appendChild(headerDiv);
+                tourDiv.appendChild(etappenDiv);
+                toursList.appendChild(tourDiv);
+            }
+
+            addEventListeners();
+
+        } catch (error) {
+            console.error('Fehler beim Laden der Touren:', error);
+            toursList.innerHTML = '<div class="alert alert-danger">Fehler beim Laden der Touren.</div>';
+        }
+    }
+
+    function addEventListeners() {
+        document.querySelectorAll('.btn-toggle-etappen').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tourId = this.getAttribute('data-tour-id');
+                toggleEtappen(tourId, this);
+            });
+        });
+
+        document.querySelectorAll('.edit-tour-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tourId = this.getAttribute('data-tour-id');
+                const tourName = this.getAttribute('data-tour-name');
+                editTour(tourId, tourName);
+            });
+        });
+
+        document.querySelectorAll('.delete-tour-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tourId = this.getAttribute('data-tour-id');
+                const tourName = this.getAttribute('data-tour-name');
+                deleteTour(tourId, tourName);
+            });
+        });
+
+        document.querySelectorAll('.delete-etappe-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tourId = this.getAttribute('data-tour-id');
+                const etappeId = this.getAttribute('data-etappe-id');
+                const etappeTitle = this.getAttribute('data-etappe-title');
+                deleteEtappe(tourId, etappeId, etappeTitle);
+            });
+        });
+    }
+
+    function toggleEtappen(tourId, button) {
+        const etappenDiv = document.getElementById(`etappen-${tourId}`);
+
+        if (etappenDiv.classList.contains('show')) {
+            etappenDiv.classList.remove('show');
+            button.textContent = 'Etappen anzeigen';
+        } else {
+            etappenDiv.classList.add('show');
+            button.textContent = 'Etappen ausblenden';
+        }
+    }
+
+    async function deleteEtappe(tourId, etappeId, etappeTitle) {
+        const confirmed = confirm(`Möchtest du die Etappe "${etappeTitle}" wirklich löschen?\n\nDies kann nicht rückgängig gemacht werden!`);
+
+        if (!confirmed) return;
+
+        try {
+            await db.collection('tours').doc(tourId).collection('etappen').doc(etappeId).delete();
+            alert(`Etappe "${etappeTitle}" wurde erfolgreich gelöscht!`);
+            loadTours();
+        } catch (error) {
+            console.error('Fehler beim Löschen der Etappe:', error);
+            alert('Fehler beim Löschen der Etappe. Bitte versuche es erneut.');
+        }
+    }
+
+    async function deleteTour(tourId, tourName) {
+        const confirmed = confirm(`Möchtest du die Tour "${tourName}" wirklich löschen?\n\nDies wird auch alle zugehörigen Etappen löschen und kann nicht rückgängig gemacht werden!`);
+
+        if (!confirmed) return;
+
+        try {
+            const etappenSnapshot = await db.collection('tours').doc(tourId).collection('etappen').get();
+            const batch = db.batch();
+
+            etappenSnapshot.forEach(doc => {
+                batch.delete(doc.ref);
+            });
+
+            batch.delete(db.collection('tours').doc(tourId));
+            await batch.commit();
+
+            alert(`Tour "${tourName}" wurde erfolgreich gelöscht!`);
+            loadTours();
+        } catch (error) {
+            console.error('Fehler beim Löschen:', error);
+            alert('Fehler beim Löschen der Tour. Bitte versuche es erneut.');
+        }
+    }
+
+    // Create tour form
     document.getElementById('fullTourForm').addEventListener('submit', async (e) => {
         e.preventDefault();
 
         const id = document.getElementById('tourId').value.trim();
         const description = document.getElementById('tourDesc').value.trim();
-        const etappeGroups = document.querySelectorAll('.etappe-group');
+        const etappeGroups = document.querySelectorAll('#etappenContainer .etappe-group');
 
         if (etappeGroups.length === 0) {
             alert("Mindestens eine Etappe hinzufügen!");
@@ -151,9 +735,61 @@
             e.target.reset();
             etappenContainer.innerHTML = '';
             addEtappeField();
+
+            if (toursList.innerHTML && !toursList.innerHTML.includes('Touren laden')) {
+                loadTours();
+            }
+
         } catch (err) {
             console.error(err);
             alert("Fehler beim Speichern.");
+        }
+    });
+
+    // Edit tour form
+    document.getElementById('editTourForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        if (!currentEditTourId) {
+            alert("Keine Tour zum Bearbeiten ausgewählt!");
+            return;
+        }
+
+        const description = document.getElementById('editTourDesc').value.trim();
+        const etappeGroups = document.querySelectorAll('#editEtappenContainer .etappe-group');
+
+        if (etappeGroups.length === 0) {
+            alert("Mindestens eine Etappe hinzufügen!");
+            return;
+        }
+
+        try {
+            await db.collection('tours').doc(currentEditTourId).update({ description });
+
+            const existingEtappen = await db.collection('tours').doc(currentEditTourId).collection('etappen').get();
+            const batch = db.batch();
+
+            existingEtappen.forEach(doc => {
+                batch.delete(doc.ref);
+            });
+
+            await batch.commit();
+
+            for (const group of etappeGroups) {
+                const date = group.querySelector('.etappe-date').value;
+                const title = group.querySelector('.etappe-title').value.trim();
+                const url = group.querySelector('.etappe-url').value.trim();
+
+                await db.collection('tours').doc(currentEditTourId).collection('etappen').add({ date, title, url });
+            }
+
+            alert("Tour erfolgreich aktualisiert!");
+            cancelEdit();
+            loadTours();
+
+        } catch (err) {
+            console.error(err);
+            alert("Fehler beim Aktualisieren.");
         }
     });
 </script>

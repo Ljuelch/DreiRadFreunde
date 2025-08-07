@@ -9,6 +9,15 @@
 .sec1 p {
     line-height: 32px;
 }
+
+.banner .landing-text{
+    color: #fff;
+}
+
+.out-now-hover-spotify {
+    color: #ffffff;
+}
+
 .sec1-inner {
     display: flex;
     flex-wrap: wrap;
