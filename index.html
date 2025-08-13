@@ -181,8 +181,8 @@
         const db = firebase.firestore();
         const recentWrap = document.querySelector(".gallery-wrap");
 
-        // Image filenames from /assets/drfImg/
-        const backgrounds = [
+        // Default fallback images
+        const defaultBackgrounds = [
             "IMG_6765.jpeg",
             "IMG_6883.jpeg",
             "DSC00057.JPG",
@@ -190,36 +190,81 @@
             "20220628_221935.jpg"
         ];
 
-        db.collection("tours").orderBy("name", "desc").limit(5).get().then((snapshot) => {
-            snapshot.docs.forEach((doc, index) => {
-                const data = doc.data();
-                const id = data.name.replace(/\s+/g, '-').toLowerCase(); // for anchor link
-                const background = `assets/drfImg/${backgrounds[index % backgrounds.length]}`;
+        // Load slider images from Firebase settings
+        async function loadSliderImages() {
+            try {
+                const doc = await db.collection('settings').doc('slider-images').get();
+                let backgrounds = defaultBackgrounds;
+                
+                if (doc.exists) {
+                    const data = doc.data();
+                    backgrounds = data.images || defaultBackgrounds;
+                }
+                
+                return backgrounds;
+            } catch (error) {
+                console.error('Error loading slider images:', error);
+                return defaultBackgrounds;
+            }
+        }
 
-                const div = document.createElement("div");
-                div.className = "item";
-                div.style.backgroundImage = `url('${background}')`;
-                div.style.backgroundSize = "cover";
-                div.style.backgroundPosition = "center";
+        // Helper function to get image URL (regular or uploaded)
+        async function getImageUrl(imageName) {
+            if (imageName.startsWith('uploaded_')) {
+                try {
+                    const doc = await db.collection('uploaded-images').doc(imageName).get();
+                    if (doc.exists) {
+                        const data = doc.data();
+                        return `data:${data.contentType};base64,${data.data}`;
+                    }
+                } catch (error) {
+                    console.error('Error loading uploaded image:', error);
+                }
+            }
+            return `assets/drfImg/${imageName}`;
+        }
 
-                div.innerHTML = `
-                <div class="overlay pb-3">
-                    <p class="artist-name">${data.name}</p>
-                </div>
-                <div class="overlay pt-5">
-                    <div class="presave route-logo fs-1 pt-5">
-                        <a title="Zur Tour" href="touren.html#${id}">
-                            <i class="fa-solid fa-route out-now-hover-spotify"></i>
-                        </a>
+        // Load tours and display with background images
+        async function loadToursWithImages() {
+            try {
+                const backgrounds = await loadSliderImages();
+                const snapshot = await db.collection("tours").orderBy("name", "desc").limit(5).get();
+
+                for (let index = 0; index < snapshot.docs.length; index++) {
+                    const doc = snapshot.docs[index];
+                    const data = doc.data();
+                    const id = data.name.replace(/\s+/g, '-').toLowerCase();
+                    const backgroundImage = backgrounds[index % backgrounds.length];
+                    const backgroundUrl = await getImageUrl(backgroundImage);
+
+                    const div = document.createElement("div");
+                    div.className = "item";
+                    div.style.backgroundImage = `url('${backgroundUrl}')`;
+                    div.style.backgroundSize = "cover";
+                    div.style.backgroundPosition = "center";
+
+                    div.innerHTML = `
+                    <div class="overlay pb-3">
+                        <p class="artist-name">${data.name}</p>
                     </div>
-                </div>
-            `;
+                    <div class="overlay pt-5">
+                        <div class="presave route-logo fs-1 pt-5">
+                            <a title="Zur Tour" href="touren.html#${id}">
+                                <i class="fa-solid fa-route out-now-hover-spotify"></i>
+                            </a>
+                        </div>
+                    </div>
+                `;
 
-                recentWrap.appendChild(div);
-            });
-        }).catch((error) => {
-            console.error("Fehler beim Laden der Touren:", error);
-        });
+                    recentWrap.appendChild(div);
+                }
+            } catch (error) {
+                console.error("Fehler beim Laden der Touren:", error);
+            }
+        }
+
+        // Initialize
+        loadToursWithImages();
     </script>
 
 

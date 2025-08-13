@@ -140,6 +140,7 @@
             margin-top: 0.25rem;
         }
 
+        /* Gelbe Hervorhebung für Platzhalter */
         .etappe-placeholder {
             background-color: #fff3cd !important;
             border-left: 4px solid #ffc107 !important;
@@ -257,6 +258,100 @@
         .alert {
             margin-top: 1rem;
         }
+
+        /* Bildverwaltung Styles */
+        .image-management {
+            background: rgba(13, 202, 240, 0.1);
+            border: 1px solid #0dcaf0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .image-slot {
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 100px;
+        }
+
+        .image-slot.has-image {
+            border: 2px solid #28a745;
+            background: rgba(40, 167, 69, 0.1);
+        }
+
+        .image-preview {
+            width: 120px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid #dee2e6;
+        }
+
+        .image-info {
+            flex: 1;
+            margin: 0 1rem;
+        }
+
+        .image-info h6 {
+            margin: 0 0 0.5rem 0;
+            color: #333;
+        }
+
+        .image-info small {
+            color: #666;
+        }
+
+        .image-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .available-images {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 1rem;
+            background: #fff;
+        }
+
+        .available-image {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .available-image:hover {
+            background: #f8f9fa;
+        }
+
+        .available-image img {
+            width: 60px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-right: 1rem;
+        }
+
+        .available-image.selected {
+            background: rgba(13, 202, 240, 0.2);
+            border: 1px solid #0dcaf0;
+        }
+
+        .modal-body {
+            max-height: 70vh;
+            overflow-y: auto;
+        }
     </style>
 </head>
 <body class="p-4">
@@ -300,7 +395,7 @@
         <!-- Neue Tour erstellen -->
         <div id="createSection">
             <form id="fullTourForm">
-                <h3 class="mb-3">Neue Tour erstellen</h3>
+                <h3 class="">Neue Tour erstellen</h3>
 
                 <!-- Tour Info -->
                 <div class="mb-2">
@@ -360,13 +455,66 @@
         <div class="section-divider"></div>
 
         <!-- Touren löschen -->
-        <div>
-            <h3 class="mb-3">Vorhandene Touren verwalten</h3>
+        <div class="mb-5">
+            <h3 class="mb-3 mt-3">Vorhandene Touren verwalten</h3>
             <p class="text-muted">Hier kannst du vorhandene Touren bearbeiten oder löschen. <strong>Achtung:</strong> Das Löschen kann nicht rückgängig gemacht werden!</p>
 
             <button id="loadToursBtn" class="btn btn-outline-secondary mb-3">Touren laden</button>
 
             <div id="tours-list"></div>
+        </div>
+
+        <!-- Bildverwaltung für Slider -->
+        <div class="image-management">
+            <h3 class="mb-3" style="color: #0dcaf0;">Slider-Bilder verwalten</h3>
+            <p class="text-muted mb-4">Hier können Sie die 5 Bilder für den Slider auf der Startseite verwalten.</p>
+
+            <div id="imageSlots">
+                <!-- Wird dynamisch gefüllt -->
+            </div>
+
+            <div class="d-flex gap-2 mt-3">
+                <button id="saveImagesBtn" class="btn btn-info">Änderungen speichern</button>
+                <button id="resetImagesBtn" class="btn btn-outline-secondary">Zurücksetzen</button>
+                <button id="loadImagesBtn" class="btn btn-outline-info">Aktuelle Bilder laden</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Bildauswahl Modal -->
+<div class="modal fade" id="imageSelectModal" tabindex="-1" aria-labelledby="imageSelectModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageSelectModalLabel">Bild auswählen - Position <span id="currentSlot"></span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <h6>Neues Bild hochladen</h6>
+                    <input type="file" class="form-control mb-2" id="imageUpload" accept="image/*">
+                    <div id="uploadPreview" class="upload-preview mb-3" style="display: none;">
+                        <img id="previewImage" style="max-width: 200px; max-height: 150px; border-radius: 6px; border: 1px solid #ddd;">
+                        <div class="mt-2">
+                            <button type="button" class="btn btn-success btn-sm" id="uploadImageBtn">Hochladen</button>
+                            <button type="button" class="btn btn-secondary btn-sm" id="cancelUploadBtn">Abbrechen</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="border-top pt-3">
+                    <h6>Aus vorhandenen Bildern wählen</h6>
+                    <div id="availableImages" class="available-images">
+                        <!-- Wird dynamisch gefüllt -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                <button type="button" class="btn btn-primary" id="selectImageBtn" disabled>Bild auswählen</button>
+            </div>
         </div>
     </div>
 </div>
@@ -376,7 +524,7 @@
         apiKey: "AIzaSyBKQVAV9j_dvd6w7xm8-lW-m30Z9GAW3Jc",
         authDomain: "dreiradfreunde-56aca.firebaseapp.com",
         projectId: "dreiradfreunde-56aca",
-        storageBucket: "dreiradfreunde-56aca.firebasestorage.app",
+        storageBucket: "dreiradfreunde-56aca.appspot.com",
         messagingSenderId: "289133944113",
         appId: "1:289133944113:web:a03bc3aec8fd747aa4a410"
     };
@@ -394,6 +542,21 @@
     const logoutBtn = document.getElementById('logoutBtn');
     const userEmail = document.getElementById('userEmail');
 
+    // Image management elements
+    const imageSlotsContainer = document.getElementById('imageSlots');
+    const saveImagesBtn = document.getElementById('saveImagesBtn');
+    const resetImagesBtn = document.getElementById('resetImagesBtn');
+    const loadImagesBtn = document.getElementById('loadImagesBtn');
+    const imageSelectModal = new bootstrap.Modal(document.getElementById('imageSelectModal'));
+    const availableImagesContainer = document.getElementById('availableImages');
+    const selectImageBtn = document.getElementById('selectImageBtn');
+    const currentSlotSpan = document.getElementById('currentSlot');
+    const imageUpload = document.getElementById('imageUpload');
+    const uploadPreview = document.getElementById('uploadPreview');
+    const previewImage = document.getElementById('previewImage');
+    const uploadImageBtn = document.getElementById('uploadImageBtn');
+    const cancelUploadBtn = document.getElementById('cancelUploadBtn');
+
     // Admin elements
     const etappenContainer = document.getElementById('etappenContainer');
     const addEtappeBtn = document.getElementById('addEtappeBtn');
@@ -406,6 +569,22 @@
     const cancelEditBtn = document.getElementById('cancelEditBtn');
 
     let currentEditTourId = null;
+    let currentSliderImages = [];
+    let availableImages = [];
+    let currentEditingSlot = -1;
+    let selectedImageIndex = -1;
+    let uploadedFile = null;
+
+    // Verfügbare Bilder aus dem assets/drfImg Ordner
+    const defaultImages = [
+        "IMG_6765.jpeg",
+        "IMG_6883.jpeg",
+        "DSC00057.JPG",
+        "20190527_122826.jpg",
+        "20220628_221935.jpg",
+        "IMG_3410.jpeg",
+        "IMG_3411.jpeg"
+    ];
 
     // Auth state listener
     auth.onAuthStateChanged((user) => {
@@ -433,6 +612,9 @@
     }
 
     function initializeAdmin() {
+        // Initialize image management
+        initializeImageManagement();
+
         // Initial Etappe field
         addEtappeField();
 
@@ -441,6 +623,322 @@
         editAddEtappeBtn.addEventListener('click', () => addEtappeField(true));
         loadToursBtn.addEventListener('click', loadTours);
         cancelEditBtn.addEventListener('click', cancelEdit);
+
+        // Image management event listeners
+        loadImagesBtn.addEventListener('click', loadCurrentImages);
+        saveImagesBtn.addEventListener('click', saveImages);
+        resetImagesBtn.addEventListener('click', resetToDefaults);
+        selectImageBtn.addEventListener('click', selectImage);
+        
+        // Upload functionality event listeners
+        imageUpload.addEventListener('change', handleFileSelect);
+        uploadImageBtn.addEventListener('click', handleImageUpload);
+        cancelUploadBtn.addEventListener('click', cancelImageUpload);
+    }
+
+    // Image Management Functions
+    function initializeImageManagement() {
+        availableImages = [...defaultImages];
+        currentSliderImages = [...defaultImages.slice(0, 5)]; // Default ersten 5 Bilder
+        renderImageSlots();
+        loadCurrentImages(); // This will also load uploaded images
+    }
+
+    function renderImageSlots() {
+        imageSlotsContainer.innerHTML = '';
+
+        for (let i = 0; i < 5; i++) {
+            const slot = document.createElement('div');
+            slot.className = 'image-slot';
+            slot.dataset.index = i;
+
+            const hasImage = currentSliderImages[i];
+            if (hasImage) {
+                slot.classList.add('has-image');
+            }
+
+            const imageName = currentSliderImages[i];
+            const isUploadedImage = imageName && imageName.startsWith('uploaded_');
+            const imageUrl = hasImage ? 
+                (isUploadedImage ? '#' : `assets/drfImg/${imageName}`) : '';
+            
+            slot.innerHTML = `
+                <div>
+                    ${hasImage ? `<img src="${imageUrl}" alt="Slider Bild ${i + 1}" class="image-preview" data-image-name="${imageName}">` : '<div style="width:120px;height:80px;background:#f0f0f0;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#999;"><i class="fas fa-image"></i></div>'}
+                </div>
+                <div class="image-info">
+                    <h6>Position ${i + 1}</h6>
+                    <small>${hasImage ? imageName : 'Kein Bild ausgewählt'}</small>
+                </div>
+                <div class="image-actions">
+                    <button type="button" class="btn btn-sm btn-primary" onclick="openImageSelector(${i})">
+                        ${hasImage ? 'Ändern' : 'Auswählen'}
+                    </button>
+                    ${hasImage ? `<button type="button" class="btn btn-sm btn-outline-danger" onclick="removeImage(${i})">Entfernen</button>` : ''}
+                </div>
+            `;
+
+            // Load uploaded image data if needed
+            if (hasImage && isUploadedImage) {
+                loadUploadedImagePreview(imageName, slot.querySelector('.image-preview'));
+            }
+
+            imageSlotsContainer.appendChild(slot);
+        }
+    }
+
+    function openImageSelector(slotIndex) {
+        currentEditingSlot = slotIndex;
+        selectedImageIndex = -1;
+        uploadedFile = null;
+        currentSlotSpan.textContent = slotIndex + 1;
+        
+        // Reset upload form
+        imageUpload.value = '';
+        uploadPreview.style.display = 'none';
+
+        // Render verfügbare Bilder
+        availableImagesContainer.innerHTML = '';
+        availableImages.forEach((image, index) => {
+            const imageEl = document.createElement('div');
+            imageEl.className = 'available-image';
+            imageEl.dataset.index = index;
+            imageEl.onclick = () => selectAvailableImage(index);
+
+            const isUploaded = image.startsWith('uploaded_');
+            const imgElement = document.createElement('img');
+            imgElement.alt = image;
+            
+            if (isUploaded) {
+                loadUploadedImagePreview(image, imgElement);
+            } else {
+                imgElement.src = `assets/drfImg/${image}`;
+            }
+
+            const textDiv = document.createElement('div');
+            textDiv.innerHTML = `
+                <strong>${image}</strong>
+                <small class="d-block text-muted">${isImageInUse(image) ? '✓ Bereits verwendet' : 'Verfügbar'}</small>
+            `;
+
+            imageEl.appendChild(imgElement);
+            imageEl.appendChild(textDiv);
+            availableImagesContainer.appendChild(imageEl);
+        });
+
+        selectImageBtn.disabled = true;
+        imageSelectModal.show();
+    }
+
+    function selectAvailableImage(index) {
+        // Remove previous selection
+        document.querySelectorAll('.available-image').forEach(el => el.classList.remove('selected'));
+
+        // Add selection to clicked image
+        const selectedEl = document.querySelector(`[data-index="${index}"]`);
+        selectedEl.classList.add('selected');
+
+        selectedImageIndex = index;
+        selectImageBtn.disabled = false;
+    }
+
+    function selectImage() {
+        if (selectedImageIndex >= 0) {
+            currentSliderImages[currentEditingSlot] = availableImages[selectedImageIndex];
+            renderImageSlots();
+            imageSelectModal.hide();
+        }
+    }
+
+    function removeImage(slotIndex) {
+        currentSliderImages[slotIndex] = null;
+        renderImageSlots();
+    }
+
+    function isImageInUse(imageName) {
+        return currentSliderImages.includes(imageName);
+    }
+
+    async function loadCurrentImages() {
+        try {
+            // Load current slider images
+            const doc = await db.collection('settings').doc('slider-images').get();
+            if (doc.exists) {
+                const data = doc.data();
+                currentSliderImages = data.images || [...defaultImages.slice(0, 5)];
+            } else {
+                currentSliderImages = [...defaultImages.slice(0, 5)];
+            }
+            
+            // Load available uploaded images
+            const uploadedImagesSnapshot = await db.collection('uploaded-images').get();
+            const uploadedImages = uploadedImagesSnapshot.docs.map(doc => doc.id);
+            
+            // Combine default and uploaded images
+            availableImages = [...defaultImages, ...uploadedImages];
+            
+            renderImageSlots();
+            showMessage('Aktuelle Bilder geladen', 'success');
+        } catch (error) {
+            console.error('Fehler beim Laden der Bilder:', error);
+            showMessage('Fehler beim Laden der Bilder', 'danger');
+        }
+    }
+
+    async function saveImages() {
+        // Validierung: Alle 5 Slots müssen gefüllt sein
+        if (currentSliderImages.some(img => !img)) {
+            showMessage('Bitte wählen Sie für alle 5 Positionen ein Bild aus', 'warning');
+            return;
+        }
+
+        try {
+            await db.collection('settings').doc('slider-images').set({
+                images: currentSliderImages,
+                lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            showMessage('Slider-Bilder erfolgreich gespeichert!', 'success');
+        } catch (error) {
+            console.error('Fehler beim Speichern:', error);
+            showMessage('Fehler beim Speichern der Bilder', 'danger');
+        }
+    }
+
+    function resetToDefaults() {
+        currentSliderImages = [...defaultImages.slice(0, 5)];
+        renderImageSlots();
+        showMessage('Auf Standard-Bilder zurückgesetzt', 'info');
+    }
+
+    // Upload functionality
+    function handleFileSelect(event) {
+        const file = event.target.files[0];
+        if (!file) {
+            uploadPreview.style.display = 'none';
+            return;
+        }
+
+        // Validate file type
+        if (!file.type.startsWith('image/')) {
+            showMessage('Bitte wählen Sie eine gültige Bilddatei aus', 'warning');
+            event.target.value = '';
+            return;
+        }
+
+        // Validate file size (max 5MB)
+        if (file.size > 5 * 1024 * 1024) {
+            showMessage('Das Bild ist zu groß. Maximale Größe: 5MB', 'warning');
+            event.target.value = '';
+            return;
+        }
+
+        uploadedFile = file;
+
+        // Show preview
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            previewImage.src = e.target.result;
+            uploadPreview.style.display = 'block';
+            
+            // Deselect any previously selected existing image
+            document.querySelectorAll('.available-image').forEach(el => el.classList.remove('selected'));
+            selectedImageIndex = -1;
+            selectImageBtn.disabled = true;
+        };
+        reader.readAsDataURL(file);
+    }
+
+    async function handleImageUpload() {
+        if (!uploadedFile) {
+            showMessage('Keine Datei ausgewählt', 'warning');
+            return;
+        }
+
+        try {
+            uploadImageBtn.disabled = true;
+            uploadImageBtn.textContent = 'Wird hochgeladen...';
+
+            // Generate unique filename
+            const timestamp = Date.now();
+            const extension = uploadedFile.name.split('.').pop().toLowerCase();
+            const fileName = `uploaded_${timestamp}.${extension}`;
+
+            // Convert to base64
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                const base64Data = e.target.result.split(',')[1];
+                
+                try {
+                    // Save image data to Firestore
+                    await db.collection('uploaded-images').doc(fileName).set({
+                        fileName: fileName,
+                        data: base64Data,
+                        contentType: uploadedFile.type,
+                        uploadedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+
+                    // Add to available images list
+                    availableImages.push(fileName);
+                    
+                    // Set as current selection and close modal
+                    currentSliderImages[currentEditingSlot] = fileName;
+                    renderImageSlots();
+                    imageSelectModal.hide();
+                    
+                    showMessage('Bild erfolgreich hochgeladen und ausgewählt!', 'success');
+                } catch (error) {
+                    console.error('Upload error:', error);
+                    showMessage('Fehler beim Hochladen des Bildes', 'danger');
+                }
+                
+                uploadImageBtn.disabled = false;
+                uploadImageBtn.textContent = 'Hochladen';
+            };
+            reader.readAsDataURL(uploadedFile);
+
+        } catch (error) {
+            console.error('Upload error:', error);
+            showMessage('Fehler beim Hochladen des Bildes', 'danger');
+            uploadImageBtn.disabled = false;
+            uploadImageBtn.textContent = 'Hochladen';
+        }
+    }
+
+    function cancelImageUpload() {
+        imageUpload.value = '';
+        uploadPreview.style.display = 'none';
+        uploadedFile = null;
+    }
+
+    async function loadUploadedImagePreview(imageName, imgElement) {
+        try {
+            const doc = await db.collection('uploaded-images').doc(imageName).get();
+            if (doc.exists) {
+                const data = doc.data();
+                const base64Src = `data:${data.contentType};base64,${data.data}`;
+                imgElement.src = base64Src;
+            }
+        } catch (error) {
+            console.error('Error loading uploaded image:', error);
+        }
+    }
+
+    function showMessage(message, type = 'info') {
+        // Remove existing alerts
+        document.querySelectorAll('.temp-alert').forEach(alert => alert.remove());
+
+        const alert = document.createElement('div');
+        alert.className = `alert alert-${type} temp-alert`;
+        alert.textContent = message;
+        alert.style.position = 'fixed';
+        alert.style.top = '20px';
+        alert.style.right = '20px';
+        alert.style.zIndex = '9999';
+        alert.style.minWidth = '300px';
+
+        document.body.appendChild(alert);
+
+        setTimeout(() => alert.remove(), 3000);
     }
 
     // Login form handler
